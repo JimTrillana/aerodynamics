@@ -1,4 +1,6 @@
+import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,12 +13,15 @@ Color getColorHex(String hexColor) {
   return Color(int.parse(hexColor, radix: 16));
 }
 
+bool visiblePresAlt, visibleDensityAlt, visibleTempAlt;
 class Altitude extends StatefulWidget {
   @override
   _AltitudeState createState() => _AltitudeState();
 }
 
 class _AltitudeState extends State<Altitude> {
+  final _advancedDrawerController = AdvancedDrawerController();
+
   var finalAnswer ;
   String required= 'Pressure', units;
   int number;
@@ -67,15 +72,23 @@ class _AltitudeState extends State<Altitude> {
   var R_imp = 1716;
   var R_met = 288.16;
 
+  @override
+  void initState() {
+    super.initState();
+
+    visiblePresAlt = false;
+    visibleDensityAlt = false;
+    visibleTempAlt = false;
+  }
+
   final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
-  String dropdownValue = 'Pressure';
+  String dropdownValue = 'Choose Altitude';
   int currentIndex = 0;
 
   Widget _requiredTextField() {
     return Container(
-        margin: EdgeInsets.only(top: 15.0),
+        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-        width: MediaQuery.of(context).size.width-30,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -101,12 +114,44 @@ class _AltitudeState extends State<Altitude> {
               color: Colors.blue,
             ),
             onChanged: (String newValue) {
-              setState(() {
-                dropdownValue = newValue;
-                required = newValue;
-              });
+              if(newValue == "Choose Altitude"){
+                setState(() {
+                  visiblePresAlt = false;
+                  visibleDensityAlt = false;
+                  visibleTempAlt = false;
+                  dropdownValue = newValue;
+                  required = newValue;
+                });
+              }
+                if(newValue == "Pressure Altitude"){
+                  setState(() {
+                    visiblePresAlt = true;
+                    visibleDensityAlt = false;
+                    visibleTempAlt = false;
+                    dropdownValue = newValue;
+                    required = newValue;
+                  });
+                }
+                if(newValue == "Temperature Altitude"){
+                  setState(() {
+                    visiblePresAlt = false;
+                    visibleDensityAlt = true;
+                    visibleTempAlt = false;
+                    dropdownValue = newValue;
+                    required = newValue;
+                  });
+                }
+                if(newValue == "Density Altitude"){
+                  setState(() {
+                    visiblePresAlt = false;
+                    visibleDensityAlt = false;
+                    visibleTempAlt = true;
+                    dropdownValue = newValue;
+                    required = newValue;
+                  });
+                }
             },
-            items: <String>['Pressure', 'Temperature', 'Density', 'Pressure Altitude', 'Density Altitude', 'Temperature Altitude', 'Pressure ratio', 'Density ratio']
+            items: <String>['Choose Altitude', 'Pressure Altitude', 'Temperature Altitude', 'Density Altitude']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -116,6 +161,209 @@ class _AltitudeState extends State<Altitude> {
 //          onChanged: (val) {
 //            required = val;
 //          }),
+          ),
+        ));
+  }
+
+  Widget pressureAlt(){
+    return Visibility(
+      visible: visiblePresAlt,
+        child: Container(
+          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("Pascal", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("atm", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("psf", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("psi", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+  Widget densityAlt(){
+    return Visibility(
+        visible: visibleDensityAlt,
+        child: Container(
+          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("kgm3", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("slugft3", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+  Widget tempAlt(){
+    return Visibility(
+        visible: visibleTempAlt,
+        child: Container(
+          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("kelvin", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+                Container(
+                  height: 50.0,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: FlatButton(
+                    // change color button if its selected or not
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: (){
+
+                    },
+                    child: Text("rankine", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                  ),
+                ),
+              ],
+            ),
           ),
         ));
   }
@@ -152,7 +400,8 @@ class _AltitudeState extends State<Altitude> {
 
   Widget _number() {
     return Container(
-      width: MediaQuery.of(context).size.width-30,
+      margin: EdgeInsets.all(10.0),
+      width: MediaQuery.of(context).size.width,
 //      decoration: BoxDecoration(
 //          border: Border.all(color:Colors.grey, width: 1),
 //          borderRadius: BorderRadius.circular(15)
@@ -533,30 +782,57 @@ class _AltitudeState extends State<Altitude> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        elevation: 0.0,
-        backgroundColor: getColorHex("#31a9dd"),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(25),
+    return AdvancedDrawer(
+      backdropColor:  getColorHex("#2592b3"),
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          elevation: 0.0,
+          backgroundColor: getColorHex("#31a9dd"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+            ),
           ),
+          leading: IconButton(
+            onPressed: _handleMenuButtonPressed,
+            icon: ValueListenableBuilder<AdvancedDrawerValue>(
+              valueListenable: _advancedDrawerController,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: Duration(milliseconds: 250),
+                  child: Icon(
+                    value.visible ? Icons.clear : Icons.menu,
+                    key: ValueKey<bool>(value.visible),
+                  ),
+                );
+              },
+            ),
+          ),
+          title:  Text("Altitude",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
         ),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.white,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _requiredTextField(),
+            pressureAlt(),
+            densityAlt(),
+            tempAlt(),
+            _number(),
+            _calculate(),
+          ],
         ),
-        title:  Text("Altitude",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-
-        ],
-      ),
+      drawer: SideBar(),
     );
+  }
+
+  void _handleMenuButtonPressed() {
+    _advancedDrawerController.showDrawer();
   }
 }

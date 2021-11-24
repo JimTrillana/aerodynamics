@@ -1,7 +1,8 @@
+import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 Color getColorHex(String hexColor) {
   hexColor = hexColor.toUpperCase().replaceAll('#', '');
@@ -17,6 +18,8 @@ class layerParam extends StatefulWidget {
 }
 
 class _layerParamState extends State<layerParam> {
+  final _advancedDrawerController = AdvancedDrawerController();
+
   var finalAnswer ;
   String required= 'Pressure', units;
   int number;
@@ -533,84 +536,109 @@ class _layerParamState extends State<layerParam> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        elevation: 0.0,
-        backgroundColor: getColorHex("#31a9dd"),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(25),
+    return AdvancedDrawer(
+        backdropColor:  getColorHex("#2592b3"),
+        controller: _advancedDrawerController,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 300),
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          elevation: 0.0,
+          backgroundColor: getColorHex("#31a9dd"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+            ),
+          ),
+          leading: IconButton(
+            onPressed: _handleMenuButtonPressed,
+            icon: ValueListenableBuilder<AdvancedDrawerValue>(
+              valueListenable: _advancedDrawerController,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: Duration(milliseconds: 250),
+                  child: Icon(
+                    value.visible ? Icons.clear : Icons.menu,
+                    key: ValueKey<bool>(value.visible),
+                  ),
+                );
+              },
+            ),
+          ),
+          title:  Text("Layer Parameters",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Form(
+                    key: _formula1Form,
+                    child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                      _requiredTextField(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _number(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width-30,
+                        child: Row(
+                          children: [
+                            _radioButton('Metric',  getColorHex('#3dabde'), 0),
+                            SizedBox(width: 10.0,),
+                            _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _calculate(),
+                      SizedBox(height: 20.0),
+                      finalAnswer != null ?
+                      Container(
+                          padding: EdgeInsets.all(15),
+                          width: MediaQuery.of(context).size.width-30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(-1, 2),
+                                blurRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                  maxLines:5),
+                              SizedBox(height: 5.0,),
+                              Text(finalAnswer),
+                            ],
+                          )) : Container(),
+                    ]),
+                  )),
+            ],
           ),
         ),
-        leading: Icon(
-           Icons.menu,
-          color: Colors.white,
-        ),
-        title:  Text("Layer Parameters",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-              width: MediaQuery.of(context).size.width,
-              child: Form(
-                key: _formula1Form,
-                child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  _requiredTextField(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _number(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width-30,
-                    child: Row(
-                      children: [
-                        _radioButton('Metric',  getColorHex('#3dabde'), 0),
-                        SizedBox(width: 10.0,),
-                        _radioButton('Imperial',  getColorHex('#3dabde'), 1),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _calculate(),
-                  SizedBox(height: 20.0),
-                  finalAnswer != null ?
-                  Container(
-                      padding: EdgeInsets.all(15),
-                      width: MediaQuery.of(context).size.width-30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(-1, 2),
-                            blurRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-                              maxLines:5),
-                          SizedBox(height: 5.0,),
-                          Text(finalAnswer),
-                        ],
-                      )) : Container(),
-                ]),
-              )),
-        ],
-      ),
+      drawer: SideBar(),
     );
+  }
+
+  void _handleMenuButtonPressed() {
+    _advancedDrawerController.showDrawer();
   }
 }

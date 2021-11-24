@@ -1,4 +1,6 @@
+import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,6 +19,8 @@ class Ratio extends StatefulWidget {
 }
 
 class _RatioState extends State<Ratio> {
+  final _advancedDrawerController = AdvancedDrawerController();
+
   var finalAnswer ;
   String required= 'Pressure', units;
   int number;
@@ -533,30 +537,50 @@ class _RatioState extends State<Ratio> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        elevation: 0.0,
-        backgroundColor: getColorHex("#31a9dd"),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(25),
+    return AdvancedDrawer(
+      backdropColor:  getColorHex("#2592b3"),
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          elevation: 0.0,
+          backgroundColor: getColorHex("#31a9dd"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+            ),
           ),
+          leading: IconButton(
+            onPressed: _handleMenuButtonPressed,
+            icon: ValueListenableBuilder<AdvancedDrawerValue>(
+              valueListenable: _advancedDrawerController,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: Duration(milliseconds: 250),
+                  child: Icon(
+                    value.visible ? Icons.clear : Icons.menu,
+                    key: ValueKey<bool>(value.visible),
+                  ),
+                );
+              },
+            ),
+          ),
+          title:  Text("Ratio",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
         ),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.white,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+          ],
         ),
-        title:  Text("Ratio",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-
-        ],
-      ),
+      drawer: SideBar(),
     );
+  }
+  void _handleMenuButtonPressed() {
+    _advancedDrawerController.showDrawer();
   }
 }
