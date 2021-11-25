@@ -30,12 +30,18 @@ class _layerParamState extends State<layerParam> {
   var P_0_psi = 14.7;
   var P_0_Pa = 101325;
   var P_0_atm = 1;
-  var P_36080_psf = 473.0232826;
+//  var P_36080_psf = 473.0232826;
+  var P_36080_psf = 473.3159716;
   var P_36080_psi = 3.284883907;
+  //  var P_82000_psf = 51.90922594;
+  var P_82000_psf = 52.146401420842516;
+  var P_82000_psi = 0.3604807357;
+  var P_154160_psf = 2.5295897224268002;
+  var P_173840_psf = 1.2254721991550257;
+
+
   var P_11000_Pa = 22606.82333;
   var P_11000_atm = 0.2231119993;
-  var P_82000_psf = 51.90922594;
-  var P_82000_psi = 0.3604807357;
   var P_25000_Pa = 2484.742214;
   var P_25000_atm = 0.02452249903;
   var P_47000_Pa = 120.18113266237886;
@@ -44,14 +50,18 @@ class _layerParamState extends State<layerParam> {
   var P_79000_Pa = 1.0062905951147092;
   var P_90000_Pa = 0.10406249974039408;
 
+
   var rho_0_imp = 0.002377;
   var rho_0_met = 1.225;
-  var rho_36080 = 0.0007062485947;
+//  var rho_36080 = 0.0007062485947;
+  var rho_36080 = 0.0007066855947714348;
   var rho_11000 = 0.3635080001;
   var rho_25000 = 0.03995358657;
   var rho_53000 = 0.0007171429391894748;
   var rho_79000 = 0.000021162108106425154;
   var rho_90000 = 0.0000021884154338936533;
+  var rho_82000 = 0.00007785731501666081;
+  var rho_154160 = 0.0000028955475615772658;
 
 //  var rho_25000 = pow((7.752626555*10),-5);
 
@@ -59,6 +69,9 @@ class _layerParamState extends State<layerParam> {
   var T_0_K = 288.16;
   var T_36080 = 390.33872;
   var T_11000 = 216.66;
+  var T_154160 = 509.13868656;
+  var T_173840 = 509.13868656;
+  var T_259120 = 298.5387032;
 
   var LR_1_imp = -0.003566;
   var LR_1_met = -0.0065;
@@ -176,9 +189,10 @@ class _layerParamState extends State<layerParam> {
         validator: (String val) {
           if (val.isEmpty) {
             return "Number is required";
-          } else if (int.parse(val) > 105){
-            return "Exceeded maximum number of km (105km)";
           }
+//          else if (int.parse(val) > 105){
+//            return "Exceeded maximum number of km (105km)";
+//          }
           return null;
         },
         onChanged: (String val) {
@@ -216,50 +230,54 @@ class _layerParamState extends State<layerParam> {
 //            if (units == i.toLowerCase()) {
             if (currentIndex == 1) {
 
-              if (number < 36080) {
+              if (number <= 36080) {
 
                 print(required);
                 if (required == p) {
 
-                  print('${pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psf or ${pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psi');
-
+                  print(P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp)))));
+//                  print('${pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psf or ${pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psi');
+                  // CHECK PSI
                   setState(() {
-                    finalAnswer = '${double.parse((pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psf or  ${double.parse((pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))} psf or  ${double.parse((pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psi';
                   });
 
                 } else if (required == d) {
 
-                  print('${pow(rho_0_imp * ((T_0_R - (LR_1_imp * number)) / T_0_R), 4.26)} slug/ft^3');
+
+                  print(rho_0_imp * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), (g_imp/(LR_1_imp*R_imp))-1 )));
 
                   setState(() {
-                    finalAnswer = '${double.parse((pow(rho_0_imp * ((T_0_R - (LR_1_imp * number)) / T_0_R), 4.26)).toStringAsFixed(2))} slug/ft^3';
+                    finalAnswer = '${rho_0_imp * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), (g_imp/(LR_1_imp*R_imp))-1 ))} slug/ft^3';
                   });
 
                 } else if (required == t) {
-                  print('${T_0_R - LR_1_imp * number} °R');
+
+                  print('${T_0_R + (LR_1_imp * number)} °R');
 
                   setState(() {
-                    finalAnswer = '${double.parse((T_0_R - LR_1_imp * number).toStringAsFixed(2))} °R';
+                    finalAnswer = '${T_0_R + (LR_1_imp * number)} °R';
                   });
 
                 }
-              } else if (number > 36080 && number < 82000) {
+              } else if (number > 36080 && number <= 82000) {
 
                 if (required == p) {
 
+                  //CHECK PSI
                   print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
 
                   setState(() {
-                    finalAnswer = '${double.parse((P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psf or  ${double.parse((P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or  ${double.parse((P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psi';
                   });
 
 
                 } else if (required == d) {
 
-                  print('${rho_36080 * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} slug/ft^3');
+                  print('${rho_36080 * (pow(e, ((g_imp  * (number - 36080) ) / (R_imp * T_36080))))} slug/ft^3');
 
                   setState(() {
-                    finalAnswer = '${double.parse((rho_36080 * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} slug/ft^3 ';
+                    finalAnswer = '${rho_36080 * (pow(e, ((g_imp  * (number - 36080) ) / (R_imp * T_36080))))} slug/ft^3 ';
                   });
 
 
@@ -268,37 +286,111 @@ class _layerParamState extends State<layerParam> {
                   print('${T_36080} °R');
 
                   setState(() {
-                    finalAnswer = '${double.parse((T_36080).toStringAsFixed(2))} °R ';
+                    finalAnswer = '${T_36080} °R ';
                   });
 
                 }
-              } else if (number > 82000 && number < 154160) {
+              } else if (number > 82000 && number <= 154160) {
 
                 if (required == p) {
 
-                  print('${P_82000_psf * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
+                  //CHECK LR_2_IMP > 0.0016...
+                  //CHECK PSI
+                  print(P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp)))));
+
+//                  print('${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
 
                   setState(() {
-                    finalAnswer = '${double.parse((P_82000_psf * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
                   });
 
                 } else if (required == d) {
 
-                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
+                  print(rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 )));
+//                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
 
                   setState(() {
-                    finalAnswer = '${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3 ';
+                    finalAnswer = '${rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 ))} slug/ft^3 ';
                   });
 
                 } else if (required == t) {
 
-                  print('${T_36080 - LR_2_imp * number} °R');
+                  print('${T_36080 + (0.001646341 * (number - 82000))} °R');
 
                   setState(() {
-                    finalAnswer = '${T_36080 - LR_2_imp * number} °R ';
+                    finalAnswer = '${T_36080 + (0.001646341 * (number - 82000))} °R ';
+                  });
+                }
+
+              } else if (number > 154160 && number <= 173840) {
+
+                if (required == p) {
+
+                  //CHECK PSI
+
+                  print('${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf ');
+
+                  setState(() {
+                    finalAnswer = '${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf';
                   });
 
+                } else if (required == d) {
+
+                  print('${rho_154160 * (pow(e, ((g_imp  * (number - 154160) ) / (R_imp * T_154160))))} slug/ft^3');
+
+                  setState(() {
+                    finalAnswer = '${rho_154160 * (pow(e, ((g_imp  * (number - 154160) ) / (R_imp * T_154160))))} slug/ft^3 ';
+                  });
+
+                } else if (required == t) {
+
+                  print('${T_154160} °R');
+
+                  setState(() {
+                    finalAnswer = '${T_154160} °R ';
+                  });
                 }
+
+              } else if (number > 173840 && number <= 259120) {
+
+
+                if (required == p) {
+
+//                  //CHECK LR_2_IMP > 0.0016...
+//                  //CHECK PSI
+                  print(P_173840_psf * (pow((1 + ((-0.002469512)*(number-173840) / 509.53872) ), g_imp/(-0.002469512*(R_imp)))));
+//
+////                  print('${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
+//
+//                  setState(() {
+//                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
+//                  });
+
+                } else if (required == d) {
+
+//                  print(rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 )));
+////                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
+//
+//                  setState(() {
+//                    finalAnswer = '${rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 ))} slug/ft^3 ';
+//                  });
+
+                } else if (required == t) {
+
+                  print('${T_173840 + (-0.002469512 * (number - 173840))} °R');
+
+                  setState(() {
+                    finalAnswer = '${T_173840 + (-0.002469512 * (number - 173840))} °R ';
+                  });
+                }
+
+
+
+
+              } else if (number > 259120 && number <= 295200) {
+
+              } else if (number > 295200 && number <= 344400) {
+
               }
             }
 
