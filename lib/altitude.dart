@@ -89,16 +89,11 @@ class _AltitudeState extends State<Altitude> {
     return Container(
         margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(-1, 2),
-              blurRadius: 1,
-            ),
-          ],
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -181,7 +176,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -200,7 +195,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color:getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -219,7 +214,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -238,7 +233,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -274,7 +269,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color:getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -293,7 +288,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -329,7 +324,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -348,7 +343,7 @@ class _AltitudeState extends State<Altitude> {
                   margin: EdgeInsets.only(right: 10.0),
                   child: FlatButton(
                     // change color button if its selected or not
-                    color: Colors.blueGrey,
+                    color: getColorHex('#3dabde'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -409,17 +404,18 @@ class _AltitudeState extends State<Altitude> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
+          border: new OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.black)),
           focusedBorder: InputBorder.none,
 //            enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.red)),
           disabledBorder: InputBorder.none,
 //            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
 //            border: InputBorder.none,
-          border: UnderlineInputBorder(
-              borderRadius:BorderRadius.circular(10.0)),
 //            border: Border.all(color:Colors.grey, width: 1),
 //            prefixIcon: Icon(Icons.lock),
-          fillColor: Colors.grey[100],
+          fillColor: Colors.white,
           filled: true,
           labelText: "Enter number in km",
         ),
@@ -792,11 +788,6 @@ class _AltitudeState extends State<Altitude> {
           titleSpacing: 0,
           elevation: 0.0,
           backgroundColor: getColorHex("#31a9dd"),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-            ),
-          ),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -812,19 +803,39 @@ class _AltitudeState extends State<Altitude> {
               },
             ),
           ),
-          title:  Text("Altitude",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
         ),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _requiredTextField(),
-            pressureAlt(),
-            densityAlt(),
-            tempAlt(),
-            _number(),
-            _calculate(),
+            Container(
+              height: MediaQuery.of(context).size.height/10,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: getColorHex("#31a9dd"),
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                ),
+              ),
+              child:   Text("Altitude",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+            ),
+            Expanded(
+              child: Container(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _requiredTextField(),
+                      pressureAlt(),
+                      densityAlt(),
+                      tempAlt(),
+                      _number(),
+                      _calculate(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

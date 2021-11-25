@@ -79,16 +79,11 @@ class _layerParamState extends State<layerParam> {
       margin: EdgeInsets.only(top: 15.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width-30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(-1, 2),
-              blurRadius: 1,
-            ),
-          ],
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -163,17 +158,18 @@ class _layerParamState extends State<layerParam> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
+          border: new OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.black)),
           focusedBorder: InputBorder.none,
 //            enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.red)),
           disabledBorder: InputBorder.none,
 //            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
 //            border: InputBorder.none,
-          border: UnderlineInputBorder(
-              borderRadius:BorderRadius.circular(10.0)),
 //            border: Border.all(color:Colors.grey, width: 1),
 //            prefixIcon: Icon(Icons.lock),
-          fillColor: Colors.grey[100],
+          fillColor: Colors.white,
           filled: true,
           labelText: "Enter number in km",
         ),
@@ -201,7 +197,7 @@ class _layerParamState extends State<layerParam> {
       width: MediaQuery.of(context).size.width-30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: getColorHex('#3dabde'),
+        color: getColorHex('#1ea0eb'),
       ),
       child: FlatButton(
         onPressed: () {
@@ -542,15 +538,10 @@ class _layerParamState extends State<layerParam> {
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
       child: Scaffold(
-        appBar: AppBar(
+        appBar:  AppBar(
           titleSpacing: 0,
           elevation: 0.0,
           backgroundColor: getColorHex("#31a9dd"),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-            ),
-          ),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -566,70 +557,89 @@ class _layerParamState extends State<layerParam> {
               },
             ),
           ),
-          title:  Text("Layer Parameters",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Form(
-                    key: _formula1Form,
-                    child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                      _requiredTextField(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _number(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width-30,
-                        child: Row(
-                          children: [
-                            _radioButton('Metric',  getColorHex('#3dabde'), 0),
-                            SizedBox(width: 10.0,),
-                            _radioButton('Imperial',  getColorHex('#3dabde'), 1),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      _calculate(),
-                      SizedBox(height: 20.0),
-                      finalAnswer != null ?
-                      Container(
-                          padding: EdgeInsets.all(15),
-                          width: MediaQuery.of(context).size.width-30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(-1, 2),
-                                blurRadius: 1,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-                                  maxLines:5),
-                              SizedBox(height: 5.0,),
-                              Text(finalAnswer),
-                            ],
-                          )) : Container(),
-                    ]),
-                  )),
+                height: MediaQuery.of(context).size.height/10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: getColorHex("#31a9dd"),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                  ),
+                ),
+                  child:   Text("Layer Parameters",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+              ),
+              Expanded(
+                child: Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Form(
+                              key: _formula1Form,
+                              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                                _requiredTextField(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                _number(),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width-30,
+                                  child: Row(
+                                    children: [
+                                      _radioButton('Metric',  getColorHex('#3dabde'), 0),
+                                      SizedBox(width: 10.0,),
+                                      _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                _calculate(),
+                                SizedBox(height: 20.0),
+                                finalAnswer != null ?
+                                Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: MediaQuery.of(context).size.width-30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(-1, 2),
+                                          blurRadius: 1,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                            maxLines:5),
+                                        SizedBox(height: 5.0,),
+                                        Text(finalAnswer),
+                                      ],
+                                    )) : Container(),
+                              ]),
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

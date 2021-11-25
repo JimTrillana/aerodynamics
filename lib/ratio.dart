@@ -547,11 +547,6 @@ class _RatioState extends State<Ratio> {
           titleSpacing: 0,
           elevation: 0.0,
           backgroundColor: getColorHex("#31a9dd"),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-            ),
-          ),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -567,13 +562,23 @@ class _RatioState extends State<Ratio> {
               },
             ),
           ),
-          title:  Text("Ratio",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              height: MediaQuery.of(context).size.height/10,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: getColorHex("#31a9dd"),
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                ),
+              ),
+              child:   Text("Ratio",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+            ),
           ],
         ),
       ),
