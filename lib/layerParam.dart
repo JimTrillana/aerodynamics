@@ -34,10 +34,18 @@ class _layerParamState extends State<layerParam> {
   var P_36080_psf = 473.3159716;
   var P_36080_psi = 3.284883907;
   //  var P_82000_psf = 51.90922594;
-  var P_82000_psf = 52.146401420842516;
+//  var P_82000_psf = 52.146401420842516; // fromsystem output
+  var P_82000_psf = 52.14640142;
   var P_82000_psi = 0.3604807357;
-  var P_154160_psf = 2.5295897224268002;
-  var P_173840_psf = 1.2254721991550257;
+//  var P_154160_psf = 2.5295899846838985; // from system output
+  var P_154160_psf = 2.5295899846838985;
+//  var P_173840_psf = 1.2254723844870552; // from system output
+  var P_173840_psf = 1.225472385;
+//  var P_259120_psf = 0.021287567650763197; // from system output
+  var P_259120_psf = 0.02128756766;
+//  var P_295200_psf = 0.002208151927201491; // from system output
+  var P_295200_psf = 0.002208151928;
+  var P_344400_psf = 0.00015798519209960692;
 
 
   var P_11000_Pa = 22606.82333;
@@ -53,15 +61,22 @@ class _layerParamState extends State<layerParam> {
 
   var rho_0_imp = 0.002377;
   var rho_0_met = 1.225;
-//  var rho_36080 = 0.0007062485947;
-  var rho_36080 = 0.0007066855947714348;
+//  var rho_36080 = 0.0007066855947714348; // from system output
+  var rho_36080 = 0.0007066855948;
   var rho_11000 = 0.3635080001;
   var rho_25000 = 0.03995358657;
   var rho_53000 = 0.0007171429391894748;
   var rho_79000 = 0.000021162108106425154;
   var rho_90000 = 0.0000021884154338936533;
-  var rho_82000 = 0.00007785731501666081;
-  var rho_154160 = 0.0000028955475615772658;
+//  var rho_82000 = 0.00007785731501666081; // from system output
+  var rho_82000 = 0.00007785731502;
+//  var rho_154160 = 0.0000028955475615772658; // from system output
+  var rho_154160 = 0.000002895547672;
+//  var rho_173840 = 0.0000014027623969250975; // from system output
+  var rho_173840 = 0.000001402762397;
+  var rho_259120 = 0.00000004155679898;
+//  var rho_295200 = 0.0000000043106721836103495; // from system output
+  var rho_295200 = 0.000000004310672185; // from given example
 
 //  var rho_25000 = pow((7.752626555*10),-5);
 
@@ -69,9 +84,12 @@ class _layerParamState extends State<layerParam> {
   var T_0_K = 288.16;
   var T_36080 = 390.33872;
   var T_11000 = 216.66;
-  var T_154160 = 509.13868656;
-  var T_173840 = 509.13868656;
-  var T_259120 = 298.5387032;
+  var T_154160 = 509.13871997008005;
+  var T_173840 = 509.13872;
+//  var T_259120 = 298.53871998048004;
+  var T_259120 = 298.53872;
+  var T_344400 = 406.5387199696801;
+
 
   var LR_1_imp = -0.003566;
   var LR_1_met = -0.0065;
@@ -117,7 +135,7 @@ class _layerParamState extends State<layerParam> {
                 required = newValue;
               });
             },
-            items: <String>['Pressure', 'Temperature', 'Density', 'Pressure Altitude', 'Density Altitude', 'Temperature Altitude', 'Pressure ratio', 'Density ratio']
+            items: <String>['Pressure', 'Temperature', 'Density']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -244,7 +262,6 @@ class _layerParamState extends State<layerParam> {
 
                 } else if (required == d) {
 
-
                   print(rho_0_imp * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), (g_imp/(LR_1_imp*R_imp))-1 )));
 
                   setState(() {
@@ -296,29 +313,28 @@ class _layerParamState extends State<layerParam> {
 
                   //CHECK LR_2_IMP > 0.0016...
                   //CHECK PSI
-                  print(P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp)))));
+                  print(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))));
 
 //                  print('${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
 
                   setState(() {
-                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
                   });
 
                 } else if (required == d) {
 
-                  print(rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 )));
-//                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
+                  print(rho_82000 * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), (g_imp/(0.001646341463*R_imp))-1 )));
 
                   setState(() {
-                    finalAnswer = '${rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 ))} slug/ft^3 ';
+                    finalAnswer = '${rho_82000 * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), (g_imp/(0.001646341463*R_imp))-1 ))} slug/ft^3 ';
                   });
 
                 } else if (required == t) {
 
-                  print('${T_36080 + (0.001646341 * (number - 82000))} °R');
+                  print('${T_36080 + (0.001646341463 * (number - 82000))} °R');
 
                   setState(() {
-                    finalAnswer = '${T_36080 + (0.001646341 * (number - 82000))} °R ';
+                    finalAnswer = '${T_36080 + (0.001646341463 * (number - 82000))} °R ';
                   });
                 }
 
@@ -328,7 +344,7 @@ class _layerParamState extends State<layerParam> {
 
                   //CHECK PSI
 
-                  print('${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf ');
+                  print('${P_154160_psf * (pow(e, ((g_imp / (R_imp * 509.13872)) * (number - 154160))))} psf ');
 
                   setState(() {
                     finalAnswer = '${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf';
@@ -336,7 +352,7 @@ class _layerParamState extends State<layerParam> {
 
                 } else if (required == d) {
 
-                  print('${rho_154160 * (pow(e, ((g_imp  * (number - 154160) ) / (R_imp * T_154160))))} slug/ft^3');
+                  print('${rho_154160 * (pow(e, ((g_imp  * (number - 154160) ) / (R_imp * 509.13872))))} slug/ft^3');
 
                   setState(() {
                     finalAnswer = '${rho_154160 * (pow(e, ((g_imp  * (number - 154160) ) / (R_imp * T_154160))))} slug/ft^3 ';
@@ -356,40 +372,89 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-//                  //CHECK LR_2_IMP > 0.0016...
-//                  //CHECK PSI
-                  print(P_173840_psf * (pow((1 + ((-0.002469512)*(number-173840) / 509.53872) ), g_imp/(-0.002469512*(R_imp)))));
-//
-////                  print('${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
-//
-//                  setState(() {
-//                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
-//                  });
+                  print(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))));
+
+                  setState(() {
+                    finalAnswer = '${P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp))))} psf ';
+                  });
 
                 } else if (required == d) {
 
-//                  print(rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 )));
-////                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
-//
-//                  setState(() {
-//                    finalAnswer = '${rho_82000 * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), (g_imp/(0.001646341*R_imp))-1 ))} slug/ft^3 ';
-//                  });
+                  print(rho_173840 * (pow((1 + ((-0.002469512195)*(number-173840) / T_173840) ), (g_imp/(-0.002469512195*R_imp))-1 )));
+
+                  setState(() {
+                    finalAnswer = '${rho_173840 * (pow((1 + ((-0.002469512195)*(number-173840) / T_173840) ), (g_imp/(-0.002469512195*R_imp))-1 ))} slug/ft^3 ';
+                  });
 
                 } else if (required == t) {
 
-                  print('${T_173840 + (-0.002469512 * (number - 173840))} °R');
+                  print('${T_173840 + (-0.002469512195 * (number - 173840))} °R');
 
                   setState(() {
-                    finalAnswer = '${T_173840 + (-0.002469512 * (number - 173840))} °R ';
+                    finalAnswer = '${T_173840 + (-0.002469512195 * (number - 173840))} °R ';
                   });
                 }
 
 
-
-
               } else if (number > 259120 && number <= 295200) {
 
+
+                if (required == p) {
+
+                  //CHECK PSI
+
+                  print('${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf ');
+
+                  setState(() {
+                    finalAnswer = '${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf';
+                  });
+
+                } else if (required == d) {
+
+                  print('${rho_259120 * (pow(e, ((g_imp  * (number - 259120) ) / (R_imp * T_259120))))} slug/ft^3');
+
+                  setState(() {
+                    finalAnswer = '${rho_259120 * (pow(e, ((g_imp  * (number - 259120) ) / (R_imp * T_259120))))} slug/ft^3 ';
+                  });
+
+                } else if (required == t) {
+
+                  print('${T_259120} °R');
+
+                  setState(() {
+                    finalAnswer = '${T_259120} °R ';
+                  });
+                }
+
+
               } else if (number > 295200 && number <= 344400) {
+
+
+                if (required == p) {
+
+                  print(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))));
+
+                  setState(() {
+                    finalAnswer = '${P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp))))} psf ';
+                  });
+
+                } else if (required == d) {
+
+                  print(rho_295200 * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), (g_imp/(0.002195121951*R_imp))-1 )));
+
+                  setState(() {
+                    finalAnswer = '${rho_295200 * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), (g_imp/(0.002195121951*R_imp))-1 ))} slug/ft^3 ';
+                  });
+
+                } else if (required == t) {
+
+                  print('${T_259120 + (0.002195121951 * (number - 295200))} °R');
+
+                  setState(() {
+                    finalAnswer = '${T_259120 + (0.002195121951 * (number - 295200))} °R ';
+                  });
+                }
+
 
               }
             }
