@@ -8,12 +8,11 @@ List <String>subType = [];
 final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 String dropdownValue = 'Choose Altitude';
 String dropdownValue2 = 'Choose';
-int currentIndex = 0;
 
 var finalAnswer ;
-String required= 'Pressure', units;
+String required= 'Pressure', units, requiredSubType;
 int number;
-String p = 'Pressure', t = 'Temperature', d = 'Density';
+String p = 'Pressure Altitude', t = 'Temperature Altitude', d = 'Density Altitude';
 String i = 'imperial', m = 'metric';
 
 
@@ -52,7 +51,6 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             value: dropdownValue2,
-//              hint: Text(dropdownValue),
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 24,
             isExpanded: true,
@@ -63,7 +61,10 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
               color: Colors.blue,
             ),
             onChanged: (String newValue) {
-
+              setState(() {
+                dropdownValue2 = newValue;
+                requiredSubType = newValue;
+              });
             },
             items: subType.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
@@ -71,9 +72,6 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
                 child: Text(value),
               );
             }).toList(),
-//          onChanged: (val) {
-//            required = val;
-//          }),
           ),
         ));
   }
@@ -96,22 +94,19 @@ class _AltitudeState extends State<Altitude> {
   var P_82000_psi = 0.3604807357;
   var P_25000_Pa = 2484.742214;
   var P_25000_atm = 0.02452249903;
-  var P_47000_Pa = 120.18113266237886;
-  var P_47000_atm = 0.00118609556;
-  var P_53000_Pa = 58.18578656007172;
-  var P_79000_Pa = 1.0062905951147092;
-  var P_90000_Pa = 0.10406249974039408;
+  var P_154160_psf = 2.510727083;
+  var P_154160_psi = 0.01743560474;
+  var P_47000_Pa = 120.1811327;
+  var P_47000_atm = 0.00186095561;
 
   var rho_0_imp = 0.002377;
   var rho_0_met = 1.225;
-  var rho_36080 = 0.0007062485947;
+  var rho_36080 = 0.0007066855948;
   var rho_11000 = 0.3635080001;
-  var rho_25000 = 0.03995358657;
-  var rho_53000 = 0.0007171429391894748;
-  var rho_79000 = 0.000021162108106425154;
-  var rho_90000 = 0.0000021884154338936533;
-
-//  var rho_25000 = pow((7.752626555*10),-5);
+  var rho_82000 = 0.00007785731502;
+  var rho_25000 = 0.03995358658;
+  var rho_154160 = 0.000002895429787;
+  var rho_47000 = 0.001481238904;
 
   var T_0_R = 519;
   var T_0_K = 288.16;
@@ -257,21 +252,18 @@ class _AltitudeState extends State<Altitude> {
               }
               if(newValue == "Pressure Altitude"){
                 setState(() {
-
                   dropdownValue = newValue;
                   required = newValue;
                 });
               }
               if(newValue == "Temperature Altitude"){
                 setState(() {
-
                   dropdownValue = newValue;
                   required = newValue;
                 });
               }
               if(newValue == "Density Altitude"){
                 setState(() {
-
                   dropdownValue = newValue;
                   required = newValue;
                 });
@@ -283,9 +275,6 @@ class _AltitudeState extends State<Altitude> {
                 child: Text(value),
               );
             }).toList(),
-//          onChanged: (val) {
-//            required = val;
-//          }),
           ),
         ));
   }
@@ -494,44 +483,10 @@ class _AltitudeState extends State<Altitude> {
         ));
   }
 
-  void changeIndex (int index){
-    setState((){
-      currentIndex = index;
-      print('index= $currentIndex');
-    });
-  }
-
-  Widget _radioButton(String value, Color color, int index){
-    return Expanded(
-      child: Container(
-        height: 50.0,
-        child: FlatButton(
-          // change color button if its selected or not
-          color: currentIndex == index ? color : Colors.grey[200],
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          onPressed: (){
-            changeIndex(index);
-          },
-          child: Text(value, style: TextStyle(
-            color: currentIndex == index ? Colors.white : Colors.blueGrey,
-            fontWeight: FontWeight.bold,
-
-          ),),
-        ),
-      ),
-    );
-  }
-
   Widget _number() {
     return Container(
       margin: EdgeInsets.all(10.0),
       width: MediaQuery.of(context).size.width,
-//      decoration: BoxDecoration(
-//          border: Border.all(color:Colors.grey, width: 1),
-//          borderRadius: BorderRadius.circular(15)
-//      ),
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -548,13 +503,11 @@ class _AltitudeState extends State<Altitude> {
 //            prefixIcon: Icon(Icons.lock),
           fillColor: Colors.white,
           filled: true,
-          labelText: "Enter number in km",
+          labelText: "Enter number",
         ),
         validator: (String val) {
           if (val.isEmpty) {
             return "Number is required";
-          } else if (int.parse(val) > 105){
-            return "Exceeded maximum number of km (105km)";
           }
           return null;
         },
@@ -585,313 +538,42 @@ class _AltitudeState extends State<Altitude> {
             _formula1Form.currentState.save();
 
             print(required);
-            currentIndex == 1 ? print('macau imperial') :  print('metric');
+            print(requiredSubType);
             print(number.toString());
 
+            if (required == p){
+              if (requiredSubType == 'Pascal'){
+                if (number<P_11000_Pa){
 
-            // IMPERIAL
-//            if (units == i.toLowerCase()) {
-            if (currentIndex == 1) {
+                  print('hello');
 
-              if (number < 36080) {
+//                  print (((((number/P_0_Pa)^(1/5.26))-1)*T_0_K)/LR_1_met + "meters");
+                } else if (number>P_11000_Pa && number<P_25000_Pa){
+//                  print ((ln(P_input/P_11000_Pa))*((R_met*T_11000)/g_met)+11000 + "meters")
 
-                print(required);
-                if (required == p) {
-
-                  print('${pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psf or ${pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psi');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psf or  ${double.parse((pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psi';
-                  });
-
-                } else if (required == d) {
-
-                  print('${pow(rho_0_imp * ((T_0_R - (LR_1_imp * number)) / T_0_R), 4.26)} slug/ft^3');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((pow(rho_0_imp * ((T_0_R - (LR_1_imp * number)) / T_0_R), 4.26)).toStringAsFixed(2))} slug/ft^3';
-                  });
-
-                } else if (required == t) {
-                  print('${T_0_R - LR_1_imp * number} °R');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((T_0_R - LR_1_imp * number).toStringAsFixed(2))} °R';
-                  });
+                } else if (number>P_25000_Pa && number<P_47000_Pa){
+//                  print ((((((P_input/P_25000_Pa)^(1/5.26))-1)*T_11000)/LR_2_met)+11000 + "meters")
 
                 }
-              } else if (number > 36080 && number < 82000) {
+              } else if (requiredSubType == 'atm'){
 
-                if (required == p) {
-
-                  print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psf or  ${double.parse((P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psi';
-                  });
-
-
-                } else if (required == d) {
-
-                  print('${rho_36080 * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} slug/ft^3');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((rho_36080 * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} slug/ft^3 ';
-                  });
-
-
-                } else if (required == t) {
-
-                  print('${T_36080} °R');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((T_36080).toStringAsFixed(2))} °R ';
-                  });
-
-                }
-              } else if (number > 82000 && number < 154160) {
-
-                if (required == p) {
-
-                  print('${P_82000_psf * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
-
-                  setState(() {
-                    finalAnswer = '${double.parse((P_82000_psf * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
-                  });
-
-                } else if (required == d) {
-
-                  print('${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3');
-
-                  setState(() {
-                    finalAnswer = '${0.002377 * pow(((T_36080 - (LR_2_imp * number)) / T_36080), 4.26)} slug/ft^3 ';
-                  });
-
-                } else if (required == t) {
-
-                  print('${T_36080 - LR_2_imp * number} °R');
-
-                  setState(() {
-                    finalAnswer = '${T_36080 - LR_2_imp * number} °R ';
-                  });
-
-                }
-              }
-            }
-
-            // METRIC
-//            else if (units == m.toLowerCase()) {
-            else if (currentIndex == 0) {
-
-              if (number <= 11) {
-
-                if (required == p) {
-
-                  print('${double.parse((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26))).toStringAsFixed(2))} Pa or  ${double.parse((P_0_atm * pow(((T_0_K - (LR_1_met * number)) / T_0_K), 5.26)).toStringAsFixed(2))} atm');
-                  setState(() {
-                    finalAnswer = '${P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26))} Pa';
-                  });
-
-//                  var a = P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26));
-//                  a = double.parse((a).toStringAsFixed(2));
-//                  print(a);
-
-                } else if (required == d) {
-                  print (rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), 4.26));
-
-                  setState(() {
-                    finalAnswer = '${rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), 4.26)} kg/m^3';
-                  });
-
-                } else if (required == t) {
-
-                  print('${T_0_K + -6.5 * number} K');
-                  setState(() {
-                    finalAnswer = '${T_0_K + -6.5 * number} K';
-
-                  });
-
-                }
-
-              } else if (number > 11 && number <= 25) {
-
-                if (required == p) {
-
-
-                  // CHECK ATM
-                  setState(() {
-                    number = number * 1000;
-                    print(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))));
-
-                    finalAnswer = '${P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000))))} Pa or  ${double.parse((P_11000_atm * (pow(e, ((g_met / (R_met * T_11000)) * (number - 36080))))).toStringAsFixed(2))} atm';
-                  });
-
-
-                } else if (required == d) {
-
-                  setState(() {
-                    number = number * 1000;
-                    print(rho_11000 *( pow(e,(g_met*(number-11000)/ (287.08 * T_11000)))));
-
-                    finalAnswer = '${rho_11000 *( pow(e,(g_met*(number-11000)/ (287.08 * T_11000))))} kg/m^3';
-                  });
-
-
-                } else if (required == t) {
-
-                  print('${T_11000} K');
-
-                  setState(() {
-                    finalAnswer = '${T_11000} K';
-                  });
-
-                }
-
-              } else if (number > 25 && number <= 47) {
-                print('25-47');
-                if (required == p) {
-
-                  number *= 1000;
-                  print(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))));
-
-                  setState(() {
-                    finalAnswer = '${P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08))))} Pa or  ${double.parse((P_25000_atm * pow(((T_11000 + (LR_2_imp * (number - 25000))) / T_11000), 5.26)).toStringAsFixed(2))} atm';
-                  });
-
-
-                } else if (required == d) {
-
-                  number *= 1000;
-                  print(rho_25000 * (pow((1 + ((0.003)*(number-25000) / 216.66) ), (g_met/(0.003*(287.08)))-1 )));
-
-                  setState(() {
-                    finalAnswer = '${rho_25000 * (pow((1 + ((0.003)*(number-25000) / 216.66) ), (g_met/(0.003*(287.08)))-1 ))} kg/m^3';
-                  });
-
-                } else if (required == t) {
-
-                  print('${T_11000 + 3*(number-25)} K');
-
-                  setState(() {
-                    finalAnswer = '${T_11000 + 3*(number-25)} K';
-                  });
-
-                }
-              } else if (number > 47 && number <= 53){
-                if (required == p) {
-
-                  number *= 1000;
-                  print(120.18113266237886 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
-
-                  setState(() {
-                    finalAnswer = '${120.18113266237886 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} Pa';
-                  });
-
-                } else if (required == d) {
-
-                  number *= 1000;
-                  print( 0.001481238904 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
-
-                  setState(() {
-                    finalAnswer =  0.001481238904 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))));
-                  });
-
-                } else if (required == t) {
-
-                  setState(() {
-                    finalAnswer =  '282.66 K';
-                  });
-
-                }
-              } else if (number > 53 && number <= 79){
-
-                if(required == p){
-                  number *= 1000;
-                  print(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))));
-                  setState(() {
-                    finalAnswer =  '${P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08))))} Pa';
-                  });
-
-                } else if (required == d){
-
-                  number *= 1000;
-                  print(rho_53000 * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ), (g_met/(-0.0045*(287.08)))-1 )));
-
-                  setState(() {
-                    finalAnswer =  '${rho_53000 * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ), (g_met/(-0.0045*(287.08)))-1 ))} kg/m^3';
-                  });
-
-                } else if (required == t){
-                  number *= 1000;
-                  print(282.66 + ((-0.0045)*(number-53000)));
-
-                  setState(() {
-                    finalAnswer =  '${282.66 + ((-0.0045)*(number-53000))} K';
-                  });
-
-                }
-
-              } else if (number > 79 && number <= 90){
-
-
-                if(required == p){
-
-                  number *= 1000;
-                  print('${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
-
-                  setState(() {
-                    finalAnswer =  '${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa ';
-                  });
-
-                } else if (required == d){
-
-                  number *= 1000;
-                  print( rho_79000 * (pow (e, (g_met / (287.08 * 165.66) * (number - 79000)))));
-
-                  setState(() {
-                    finalAnswer =  '${rho_79000 * (pow (e, (g_met / (287.08 * 165.66) * (number - 79000))))} kg/m^3';
-                  });
-
-                } else if (required == t){
-
-                  setState(() {
-                    finalAnswer =  '165.66  K';
-                  });
-                }
-
-              } else if (number > 90 && number <= 105){
-
-                if(required == p){
-
-                  number *= 1000;
-
-                  print(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))));
-
-                  setState(() {
-                    finalAnswer =  '${P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08))))} Pa ';
-                  });
-
-                } else if (required == d){
-
-                  number *= 1000;
-                  print(rho_90000 * (pow((1 + ((0.004)*(number-90000) / 165.66) ), (g_met/(0.004*(287.08)))-1 )));
-
-                  setState(() {
-                    finalAnswer =  '${rho_90000 * (pow((1 + ((0.004)*(number-90000) / 165.66) ), (g_met/(0.004*(287.08)))-1 ))} kg/m^3';
-                  });
-
-                } else if (required == t){
-
-                  print(165.66 + (4*(number-90)));
-
-                  setState(() {
-                    finalAnswer =  '${165.66 + (4*(number-90))} K';
-                  });
-
-                }
 
               }
+
+
+
+            } else if (required == d) {
+
+
+
+
+
+            } else if (required == t){
+
             }
+
+
+
           }
         },
         child: Text(
@@ -941,37 +623,40 @@ class _AltitudeState extends State<Altitude> {
                 image: AssetImage("assets/mobile52opac.png"),
                 fit: BoxFit.cover,
               )),
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height/10,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: getColorHex("#31a9dd"),
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
+          child: Form(
+            key: _formula1Form,
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height/10,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: getColorHex("#31a9dd"),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(25),
+                    ),
                   ),
+                  child:   Text("Altitude",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
                 ),
-                child:   Text("Altitude",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
-              ),
-              Expanded(
-                child: Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _requiredTextField(),
-                        subTypeDropDown(),
-                        _number(),
-                        _calculate(),
-                      ],
+                Expanded(
+                  child: Container(
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _requiredTextField(),
+                          subTypeDropDown(),
+                          _number(),
+                          _calculate(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

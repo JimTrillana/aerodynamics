@@ -131,12 +131,11 @@ class _layerParamState extends State<layerParam> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             value: dropdownValue,
-//              hint: Text(dropdownValue),
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 24,
             isExpanded: true,
             elevation: 16,
-//          style: const TextStyle(color: Colors.deepPurple),
+            //style: const TextStyle(color: Colors.deepPurple),
             underline: Container(
               height: 2,
               color: Colors.blue,
@@ -205,10 +204,6 @@ class _layerParamState extends State<layerParam> {
 
   Widget _number() {
     return Container(
-//      decoration: BoxDecoration(
-//          border: Border.all(color:Colors.grey, width: 1),
-//          borderRadius: BorderRadius.circular(15)
-//      ),
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(

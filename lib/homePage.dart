@@ -36,7 +36,7 @@ class _homePageState extends State<homePage> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-            image: AssetImage("assets/mobile52opac.png"),
+            image: AssetImage("assets/bg_opac67.jpg"),
             fit: BoxFit.cover,
             )),
         child: Center(
@@ -57,7 +57,7 @@ class _homePageState extends State<homePage> {
                         ),
                       ),
                       child: Image.asset(
-                        'assets/logo2.png',
+                        'assets/logo3.png',
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -67,7 +67,7 @@ class _homePageState extends State<homePage> {
                       child:  Text("AerodynamicX",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blueGrey))),
-
+                  SizedBox(height:120),
                   Container(
                     margin: EdgeInsets.only(top: 20.0),
                     width: MediaQuery.of(context).size.width-20,
