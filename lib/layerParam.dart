@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
+bool imperialSelected, metricSelected;
+
 Color getColorHex(String hexColor) {
   hexColor = hexColor.toUpperCase().replaceAll('#', '');
   if (hexColor.length == 6) {
@@ -19,6 +21,15 @@ class layerParam extends StatefulWidget {
 
 class _layerParamState extends State<layerParam> {
   final _advancedDrawerController = AdvancedDrawerController();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      imperialSelected = false;
+      metricSelected = true;
+    });
+  }
 
   var finalAnswer ;
   String required= 'Pressure', units;
@@ -111,6 +122,7 @@ class _layerParamState extends State<layerParam> {
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width-30,
         decoration: ShapeDecoration(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 1.0, style: BorderStyle.solid),
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -168,6 +180,18 @@ class _layerParamState extends State<layerParam> {
           ),
           onPressed: (){
             changeIndex(index);
+            if(index == 0){
+              setState(() {
+                imperialSelected = false;
+                metricSelected = true;
+              });
+            }
+            else if(index == 1){
+              setState(() {
+                imperialSelected = true;
+                metricSelected = false;
+              });
+            }
           },
           child: Text(value, style: TextStyle(
             color: currentIndex == index ? Colors.white : Colors.blueGrey,
@@ -181,7 +205,6 @@ class _layerParamState extends State<layerParam> {
 
   Widget _number() {
     return Container(
-      width: MediaQuery.of(context).size.width-30,
 //      decoration: BoxDecoration(
 //          border: Border.all(color:Colors.grey, width: 1),
 //          borderRadius: BorderRadius.circular(15)
@@ -202,7 +225,7 @@ class _layerParamState extends State<layerParam> {
 //            prefixIcon: Icon(Icons.lock),
           fillColor: Colors.white,
           filled: true,
-          labelText: "Enter number in km",
+          labelText: "Enter number",
         ),
         validator: (String val) {
           if (val.isEmpty) {
@@ -716,6 +739,11 @@ class _layerParamState extends State<layerParam> {
           ),
         ),
         body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/mobile52opac.png"),
+                fit: BoxFit.cover,
+              )),
           child: Column(
             children: [
               Container(
@@ -746,7 +774,21 @@ class _layerParamState extends State<layerParam> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                _number(),
+                                Container(
+                                  width: MediaQuery.of(context).size.width-30,
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: _number()),
+                                      SizedBox(width: 5.0,),
+                                      Visibility(
+                                        visible: metricSelected,
+                                          child: Text("km", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                      Visibility(
+                                          visible: imperialSelected,
+                                          child: Text("ft", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                    ],
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 15,
                                 ),

@@ -4,6 +4,17 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
+List <String>subType = [];
+final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
+String dropdownValue = 'Choose Altitude';
+int currentIndex = 0;
+
+var finalAnswer ;
+String required= 'Pressure', units;
+int number;
+String p = 'Pressure', t = 'Temperature', d = 'Density';
+String i = 'imperial', m = 'metric';
+
 
 Color getColorHex(String hexColor) {
   hexColor = hexColor.toUpperCase().replaceAll('#', '');
@@ -19,14 +30,57 @@ class Altitude extends StatefulWidget {
   _AltitudeState createState() => _AltitudeState();
 }
 
+class subTypeDropDown extends StatefulWidget {
+  @override
+  _subTypeDropDownState createState() => _subTypeDropDownState();
+}
+
+class _subTypeDropDownState extends State<subTypeDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: dropdownValue,
+//              hint: Text(dropdownValue),
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            isExpanded: true,
+            elevation: 16,
+//          style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.blue,
+            ),
+            onChanged: (String newValue) {
+
+            },
+            items: subType.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+//          onChanged: (val) {
+//            required = val;
+//          }),
+          ),
+        ));
+  }
+}
+
+
 class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
 
-  var finalAnswer ;
-  String required= 'Pressure', units;
-  int number;
-  String p = 'Pressure', t = 'Temperature', d = 'Density';
-  String i = 'imperial', m = 'metric';
 
   var P_0_psf = 2116.8;
   var P_0_psi = 14.7;
@@ -76,14 +130,12 @@ class _AltitudeState extends State<Altitude> {
   void initState() {
     super.initState();
 
+    subType.clear();
     visiblePresAlt = false;
     visibleDensityAlt = false;
     visibleTempAlt = false;
   }
 
-  final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
-  String dropdownValue = 'Choose Altitude';
-  int currentIndex = 0;
 
   Widget _requiredTextField() {
     return Container(
@@ -111,36 +163,36 @@ class _AltitudeState extends State<Altitude> {
             onChanged: (String newValue) {
               if(newValue == "Choose Altitude"){
                 setState(() {
-                  visiblePresAlt = false;
-                  visibleDensityAlt = false;
-                  visibleTempAlt = false;
+                  subType.clear();
+                  subType.add("Choose");
+                  print(subType);
                   dropdownValue = newValue;
                   required = newValue;
                 });
               }
                 if(newValue == "Pressure Altitude"){
                   setState(() {
-                    visiblePresAlt = true;
-                    visibleDensityAlt = false;
-                    visibleTempAlt = false;
+                    subType.clear();
+                    subType.add("Choose");
+                    print(subType);
                     dropdownValue = newValue;
                     required = newValue;
                   });
                 }
                 if(newValue == "Temperature Altitude"){
                   setState(() {
-                    visiblePresAlt = false;
-                    visibleDensityAlt = true;
-                    visibleTempAlt = false;
+                    subType.clear();
+                    subType.add("Choose");
+                    print(subType);
                     dropdownValue = newValue;
                     required = newValue;
                   });
                 }
                 if(newValue == "Density Altitude"){
                   setState(() {
-                    visiblePresAlt = false;
-                    visibleDensityAlt = false;
-                    visibleTempAlt = true;
+                    subType.clear();
+                    subType.add("Choose");
+                    print(subType);
                     dropdownValue = newValue;
                     required = newValue;
                   });
@@ -159,6 +211,74 @@ class _AltitudeState extends State<Altitude> {
           ),
         ));
   }
+
+  Widget _requiredTextField2() {
+    return Container(
+        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: dropdownValue,
+//              hint: Text(dropdownValue),
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            isExpanded: true,
+            elevation: 16,
+//          style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.blue,
+            ),
+            onChanged: (String newValue) {
+              if(newValue == "Choose Altitude"){
+                setState(() {
+                  subType.clear();
+                  subType.add("Choose");
+                  dropdownValue = newValue;
+                  required = newValue;
+                });
+              }
+              if(newValue == "Pressure Altitude"){
+                setState(() {
+
+                  dropdownValue = newValue;
+                  required = newValue;
+                });
+              }
+              if(newValue == "Temperature Altitude"){
+                setState(() {
+
+                  dropdownValue = newValue;
+                  required = newValue;
+                });
+              }
+              if(newValue == "Density Altitude"){
+                setState(() {
+
+                  dropdownValue = newValue;
+                  required = newValue;
+                });
+              }
+            },
+            items: subType.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+//          onChanged: (val) {
+//            required = val;
+//          }),
+          ),
+        ));
+  }
+
 
   Widget pressureAlt(){
     return Visibility(
@@ -826,9 +946,7 @@ class _AltitudeState extends State<Altitude> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       _requiredTextField(),
-                      pressureAlt(),
-                      densityAlt(),
-                      tempAlt(),
+                      subTypeDropDown(),
                       _number(),
                       _calculate(),
                     ],

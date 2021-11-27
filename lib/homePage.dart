@@ -35,15 +35,10 @@ class _homePageState extends State<homePage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                getColorHex("#ceecf5"),
-                getColorHex("#31a9dd"),
-              ],
-            )
-        ),
+            image: DecorationImage(
+            image: AssetImage("assets/mobile52opac.png"),
+            fit: BoxFit.cover,
+            )),
         child: Center(
             child: SingleChildScrollView(
               child: Column(
@@ -71,7 +66,7 @@ class _homePageState extends State<homePage> {
                       width: MediaQuery.of(context).size.width,
                       child:  Text("AerodynamicX",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
+                          style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blueGrey))),
 
                   Container(
                     margin: EdgeInsets.only(top: 20.0),
@@ -84,6 +79,13 @@ class _homePageState extends State<homePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
                           child: InkWell(
                             onTap: (){
@@ -122,6 +124,13 @@ class _homePageState extends State<homePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
                           child: InkWell(
                             onTap: (){
@@ -161,6 +170,13 @@ class _homePageState extends State<homePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
                           child: InkWell(
                             onTap: (){
