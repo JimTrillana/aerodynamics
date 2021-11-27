@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 List <String>subType = [];
 final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 String dropdownValue = 'Choose Altitude';
+String dropdownValue2 = 'Choose';
 int currentIndex = 0;
 
 var finalAnswer ;
@@ -42,6 +43,7 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
         margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         decoration: ShapeDecoration(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 1.0, style: BorderStyle.solid),
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -49,7 +51,7 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
-            value: dropdownValue,
+            value: dropdownValue2,
 //              hint: Text(dropdownValue),
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 24,
@@ -142,6 +144,7 @@ class _AltitudeState extends State<Altitude> {
         margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         decoration: ShapeDecoration(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 1.0, style: BorderStyle.solid),
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -164,8 +167,8 @@ class _AltitudeState extends State<Altitude> {
               if(newValue == "Choose Altitude"){
                 setState(() {
                   subType.clear();
-                  subType.add("Choose");
                   print(subType);
+                  dropdownValue2 = "--";
                   dropdownValue = newValue;
                   required = newValue;
                 });
@@ -173,8 +176,12 @@ class _AltitudeState extends State<Altitude> {
                 if(newValue == "Pressure Altitude"){
                   setState(() {
                     subType.clear();
-                    subType.add("Choose");
+                    subType.add("Pascal");
+                    subType.add("atm");
+                    subType.add("psf");
+                    subType.add("psi");
                     print(subType);
+                    dropdownValue2 = "Pascal";
                     dropdownValue = newValue;
                     required = newValue;
                   });
@@ -182,7 +189,9 @@ class _AltitudeState extends State<Altitude> {
                 if(newValue == "Temperature Altitude"){
                   setState(() {
                     subType.clear();
-                    subType.add("Choose");
+                    subType.add("kgm3");
+                    subType.add("slugft3");
+                    dropdownValue2 = "kgm3";
                     print(subType);
                     dropdownValue = newValue;
                     required = newValue;
@@ -191,7 +200,9 @@ class _AltitudeState extends State<Altitude> {
                 if(newValue == "Density Altitude"){
                   setState(() {
                     subType.clear();
-                    subType.add("Choose");
+                    subType.add("kelvin");
+                    subType.add("rankine");
+                    dropdownValue2 = "kelvin";
                     print(subType);
                     dropdownValue = newValue;
                     required = newValue;
@@ -924,37 +935,44 @@ class _AltitudeState extends State<Altitude> {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height/10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: getColorHex("#31a9dd"),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(25),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/mobile52opac.png"),
+                fit: BoxFit.cover,
+              )),
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height/10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: getColorHex("#31a9dd"),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                  ),
                 ),
+                child:   Text("Altitude",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
               ),
-              child:   Text("Altitude",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
-            ),
-            Expanded(
-              child: Container(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _requiredTextField(),
-                      subTypeDropDown(),
-                      _number(),
-                      _calculate(),
-                    ],
+              Expanded(
+                child: Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _requiredTextField(),
+                        subTypeDropDown(),
+                        _number(),
+                        _calculate(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       drawer: SideBar(),
