@@ -4,6 +4,7 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
+bool imperialSelected, metricSelected;
 List <String>subType = [];
 final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 String dropdownValue = 'Choose Altitude';
@@ -38,49 +39,63 @@ class subTypeDropDown extends StatefulWidget {
 class _subTypeDropDownState extends State<subTypeDropDown> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+    return Expanded(
+      child: Container(
+          margin: EdgeInsets.only(top: 15.0, left: 5.0, right: 10.0),
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(-1, 2),
+                blurRadius: 1,
+              ),
+            ],
           ),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: dropdownValue2,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            isExpanded: true,
-            elevation: 16,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: dropdownValue2,
+              icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 24,
+              isExpanded: true,
+              elevation: 16,
 //          style: const TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.blue,
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue2 = newValue;
+                  requiredSubType = newValue;
+                });
+              },
+              items: subType.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            onChanged: (String newValue) {
-              setState(() {
-                dropdownValue2 = newValue;
-                requiredSubType = newValue;
-              });
-            },
-            items: subType.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-        ));
+          )),
+    );
   }
 }
 
 
 class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
+  int currentIndex = 0;
+  String selectedType;
 
+  void changeIndex (int index){
+    setState((){
+      currentIndex = index;
+      print('index= $currentIndex');
+    });
+  }
 
   var P_0_psf = 2116.8;
   var P_0_psi = 14.7;
@@ -126,381 +141,184 @@ class _AltitudeState extends State<Altitude> {
   @override
   void initState() {
     super.initState();
-
     subType.clear();
-    visiblePresAlt = false;
-    visibleDensityAlt = false;
-    visibleTempAlt = false;
+    imperialSelected = false;
+    metricSelected = true;
   }
 
-
   Widget _requiredTextField() {
-    return Container(
-        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+    return Expanded(
+      child: Container(
+          margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 5.0),
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(-1, 2),
+                blurRadius: 1,
+              ),
+            ],
           ),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: dropdownValue,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: dropdownValue,
 //              hint: Text(dropdownValue),
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            isExpanded: true,
-            elevation: 16,
+              icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 24,
+              isExpanded: true,
+              elevation: 16,
 //          style: const TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.blue,
-            ),
-            onChanged: (String newValue) {
-              if(newValue == "Choose Altitude"){
-                setState(() {
-                  subType.clear();
-                  print(subType);
-                  dropdownValue2 = "--";
-                  dropdownValue = newValue;
-                  required = newValue;
-                });
-              }
-                if(newValue == "Pressure Altitude"){
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                if(newValue == "Choose Altitude"){
                   setState(() {
-                    subType.clear();
-                    subType.add("Pascal");
-                    subType.add("atm");
-                    subType.add("psf");
-                    subType.add("psi");
-                    print(subType);
-                    dropdownValue2 = "Pascal";
                     dropdownValue = newValue;
                     required = newValue;
+                    subType.clear();
+                    print(subType);
+                    dropdownValue2 = "--";
+                    selectedType = "Choose Altitude";
+                  });
+                }
+                if(newValue == "Pressure Altitude"){
+                  setState(() {
+                    dropdownValue = newValue;
+                    required = newValue;
+                    subType.clear();
+                    print(subType);
+                    dropdownValue2 = "--";
+                    selectedType = "Pressure Altitude";
                   });
                 }
                 if(newValue == "Density Altitude"){
                   setState(() {
-                    subType.clear();
-                    subType.add("kgm3");
-                    subType.add("slugft3");
-                    dropdownValue2 = "kgm3";
-                    print(subType);
                     dropdownValue = newValue;
                     required = newValue;
-                  });
-                }
-                if(newValue == "Temperature Altitude"){
-                  setState(() {
                     subType.clear();
-                    subType.add("kelvin");
-                    subType.add("rankine");
-                    dropdownValue2 = "kelvin";
                     print(subType);
-                    dropdownValue = newValue;
-                    required = newValue;
+                    dropdownValue2 = "--";
+                    selectedType = "Density Altitude";
                   });
                 }
-            },
-            items: <String>['Choose Altitude', 'Pressure Altitude', 'Temperature Altitude', 'Density Altitude']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+              },
+              items: <String>['Choose Altitude', 'Pressure Altitude', 'Density Altitude']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
 //          onChanged: (val) {
 //            required = val;
 //          }),
-          ),
-        ));
+            ),
+          )),
+    );
   }
 
-  Widget _requiredTextField2() {
-    return Container(
-        margin: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-        decoration: ShapeDecoration(
+  Widget _radioButton(String value, Color color, int index, String type){
+
+    return Expanded(
+      child: Container(
+        height: 50.0,
+        child: FlatButton(
+          // change color button if its selected or not
+          color: currentIndex == index ? color : Colors.grey[200],
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: BorderRadius.circular(8.0),
           ),
+          onPressed: (){
+            changeIndex(index);
+            if(type == "Choose Altitude"){
+              setState(() {
+                subType.clear();
+                print(subType);
+                dropdownValue2 = "--";
+                required = type;
+              });
+            }
+            else if(type == "Pressure Altitude" && index == 0){
+              setState(() {
+                subType.clear();
+                subType.add("Pascal");
+                subType.add("atm");
+                print(subType);
+                dropdownValue2 = "Pascal";
+                required = type;
+              });
+            }
+            else if(type == "Pressure Altitude" && index == 1){
+              setState(() {
+                subType.clear();
+                subType.add("psf");
+                subType.add("psi");
+                print(subType);
+                dropdownValue2 = "psf";
+                required = type;
+              });
+            }
+            else if(type == "Density Altitude"  && index == 0){
+              setState(() {
+                subType.clear();
+                subType.add("kgm3");
+                dropdownValue2 = "kgm3";
+                print(subType);
+                required = type;
+              });
+            }
+            else if(type == "Density Altitude"  && index == 1){
+              setState(() {
+                subType.clear();
+                subType.add("slugft3");
+                dropdownValue2 = "slugft3";
+                print(subType);
+                required = type;
+              });
+            }
+            if(index == 0){
+              setState(() {
+                imperialSelected = false;
+                metricSelected = true;
+              });
+            }
+            else if(index == 1){
+              setState(() {
+                imperialSelected = true;
+                metricSelected = false;
+              });
+            }
+          },
+          child: Text(value, style: TextStyle(
+            color: currentIndex == index ? Colors.white : Colors.blueGrey,
+            fontWeight: FontWeight.bold,
+
+          ),),
         ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: dropdownValue,
-//              hint: Text(dropdownValue),
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            isExpanded: true,
-            elevation: 16,
-//          style: const TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.blue,
-            ),
-            onChanged: (String newValue) {
-              if(newValue == "Choose Altitude"){
-                setState(() {
-                  subType.clear();
-                  subType.add("Choose");
-                  dropdownValue = newValue;
-                  required = newValue;
-                });
-              }
-              if(newValue == "Pressure Altitude"){
-                setState(() {
-                  dropdownValue = newValue;
-                  required = newValue;
-                });
-              }
-              if(newValue == "Temperature Altitude"){
-                setState(() {
-                  dropdownValue = newValue;
-                  required = newValue;
-                });
-              }
-              if(newValue == "Density Altitude"){
-                setState(() {
-                  dropdownValue = newValue;
-                  required = newValue;
-                });
-              }
-            },
-            items: subType.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-        ));
-  }
-
-
-  Widget pressureAlt(){
-    return Visibility(
-      visible: visiblePresAlt,
-        child: Container(
-          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("Pascal", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color:getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("atm", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("psf", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("psi", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
-
-  Widget densityAlt(){
-    return Visibility(
-        visible: visibleDensityAlt,
-        child: Container(
-          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color:getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("kgm3", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("slugft3", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
-
-  Widget tempAlt(){
-    return Visibility(
-        visible: visibleTempAlt,
-        child: Container(
-          margin: EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10.0),
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("kelvin", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: FlatButton(
-                    // change color button if its selected or not
-                    color: getColorHex('#3dabde'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: (){
-
-                    },
-                    child: Text("rankine", style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
 
   Widget _number() {
     return Container(
       margin: EdgeInsets.all(10.0),
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width-30,
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.black)),
-          focusedBorder: InputBorder.none,
+              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
+          focusedBorder: new OutlineInputBorder(
+              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
 //            enabledBorder: InputBorder.none,
           errorBorder: OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.red)),
+              borderSide: new BorderSide(color: Colors.red,  width: 1.5)),
           disabledBorder: InputBorder.none,
-//            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-//            border: InputBorder.none,
-//            border: Border.all(color:Colors.grey, width: 1),
-//            prefixIcon: Icon(Icons.lock),
           fillColor: Colors.white,
           filled: true,
           labelText: "Enter number",
@@ -520,8 +338,6 @@ class _AltitudeState extends State<Altitude> {
       ),
     );
   }
-
-
 
   void _pressurePascalGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
 
@@ -556,7 +372,7 @@ class _AltitudeState extends State<Altitude> {
 
     double ans = double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(2));
     var removeDecimal = ans.toString().split('.')[0];
-    
+
     setState(() {
       finalAnswer = '${int.parse(removeDecimal)/101325} ';
     });
@@ -600,7 +416,6 @@ class _AltitudeState extends State<Altitude> {
     });
 
   }
-
 
   Widget _calculate() {
     return Container(
@@ -726,6 +541,7 @@ class _AltitudeState extends State<Altitude> {
 
             }
 
+
           }
         },
         child: Text(
@@ -744,7 +560,7 @@ class _AltitudeState extends State<Altitude> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-      backdropColor:  getColorHex("#2592b3"),
+      backdropColor:  getColorHex("#ffffff"),
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -786,6 +602,7 @@ class _AltitudeState extends State<Altitude> {
                     color: getColorHex("#31a9dd"),
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
                     ),
                   ),
                   child:   Text("Altitude",
@@ -798,10 +615,28 @@ class _AltitudeState extends State<Altitude> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _requiredTextField(),
-                          subTypeDropDown(),
+                          Row(
+                            children: [
+                              _requiredTextField(),
+                              subTypeDropDown(),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width-30,
+                            child: Row(
+                              children: [
+                                _radioButton('Metric',  getColorHex('#3dabde'), 0, selectedType),
+                                SizedBox(width: 10.0,),
+                                _radioButton('Imperial',  getColorHex('#3dabde'), 1, selectedType),
+                              ],
+                            ),
+                          ),
                           _number(),
                           _calculate(),
+                          SizedBox(height:15),
                           finalAnswer != null ?
                           Container(
                               padding: EdgeInsets.all(15),
