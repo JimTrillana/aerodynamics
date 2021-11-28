@@ -59,26 +59,26 @@ class _layerParamState extends State<layerParam> {
   var P_344400_psf = 0.00015798519209960692;
 
 
-  var P_11000_Pa = 22606.82333;
+  var P_11000_Pa = 22625.0221;
   var P_11000_atm = 0.2231119993;
-  var P_25000_Pa = 2484.742214;
+  var P_25000_Pa = 2486.742462;
   var P_25000_atm = 0.02452249903;
-  var P_47000_Pa = 120.18113266237886;
+  var P_47000_Pa = 120.27788;
   var P_47000_atm = 0.00118609556;
-  var P_53000_Pa = 58.18578656007172;
-  var P_79000_Pa = 1.0062905951147092;
-  var P_90000_Pa = 0.10406249974039408;
+  var P_53000_Pa = 58.23262684;
+  var P_79000_Pa = 1.007100672;
+  var P_90000_Pa = 0.1041462713;
 
 
   var rho_0_imp = 0.002377;
   var rho_0_met = 1.225;
 //  var rho_36080 = 0.0007066855947714348; // from system output
   var rho_36080 = 0.0007066855948;
-  var rho_11000 = 0.3635080001;
-  var rho_25000 = 0.03995358657;
-  var rho_53000 = 0.0007171429391894748;
-  var rho_79000 = 0.000021162108106425154;
-  var rho_90000 = 0.0000021884154338936533;
+  var rho_11000 = 0.3638006285;
+  var rho_25000 = 0.0399857497;
+  var rho_53000 = 0.0007177202478;
+  var rho_79000 = 0.00002117914386;
+  var rho_90000 = 0.000002190177134;
 //  var rho_82000 = 0.00007785731501666081; // from system output
   var rho_82000 = 0.00007785731502;
 //  var rho_154160 = 0.0000028955475615772658; // from system output
@@ -485,9 +485,9 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-                  print('${double.parse((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26))).toStringAsFixed(2))} Pa or  ${double.parse((P_0_atm * pow(((T_0_K - (LR_1_met * number)) / T_0_K), 5.26)).toStringAsFixed(2))} atm');
+                  print('${double.parse((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))).toStringAsFixed(2))} Pa or  ${double.parse((P_0_atm * pow(((T_0_K - (LR_1_met * number)) / T_0_K), 5.26)).toStringAsFixed(2))} atm');
                   setState(() {
-                    finalAnswer = '${P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26))} Pa';
+                    finalAnswer = '${P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))} Pa';
                   });
 
 //                  var a = P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26));
@@ -495,10 +495,10 @@ class _layerParamState extends State<layerParam> {
 //                  print(a);
 
                 } else if (required == d) {
-                  print (rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), 4.26));
+                  print (rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), (-9.81/(-0.0065*287.08))-1));
 
                   setState(() {
-                    finalAnswer = '${rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), 4.26)} kg/m^3';
+                    finalAnswer = '${rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), (-9.81/(-0.0065*287.08))-1)} kg/m^3';
                   });
 
                 } else if (required == t) {
@@ -579,19 +579,19 @@ class _layerParamState extends State<layerParam> {
                 if (required == p) {
 
                   number *= 1000;
-                  print(120.18113266237886 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
+                  print(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
 
                   setState(() {
-                    finalAnswer = '${120.18113266237886 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} Pa';
+                    finalAnswer = '${P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} Pa';
                   });
 
                 } else if (required == d) {
 
                   number *= 1000;
-                  print( 0.001481238904 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
+                  print( 0.001482431319 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
 
                   setState(() {
-                    finalAnswer =  0.001481238904 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))));
+                    finalAnswer = '${0.001482431319 * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} kg/m^3';
                   });
 
                 } else if (required == t) {

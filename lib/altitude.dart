@@ -11,7 +11,7 @@ String dropdownValue2 = 'Choose';
 
 var finalAnswer ;
 String required= 'Pressure', units, requiredSubType;
-int number;
+double number;
 String p = 'Pressure Altitude', t = 'Temperature Altitude', d = 'Density Altitude';
 String i = 'imperial', m = 'metric';
 
@@ -181,7 +181,7 @@ class _AltitudeState extends State<Altitude> {
                     required = newValue;
                   });
                 }
-                if(newValue == "Temperature Altitude"){
+                if(newValue == "Density Altitude"){
                   setState(() {
                     subType.clear();
                     subType.add("kgm3");
@@ -192,7 +192,7 @@ class _AltitudeState extends State<Altitude> {
                     required = newValue;
                   });
                 }
-                if(newValue == "Density Altitude"){
+                if(newValue == "Temperature Altitude"){
                   setState(() {
                     subType.clear();
                     subType.add("kelvin");
@@ -512,14 +512,31 @@ class _AltitudeState extends State<Altitude> {
           return null;
         },
         onChanged: (String val) {
-          number = int.parse(val);
+          number = double.parse(val);
         },
         onSaved: (String value) {
-          number = int.parse(value);
+          number = double.parse(value);
         },
       ),
     );
   }
+
+
+
+  void _pressurePascal(int score) {
+
+
+
+//    _totalScore += score;
+//
+//      setState(() {
+//        _questionIndex = _questionIndex + 1;
+//      });
+//
+//      print(_questionIndex);
+
+  }
+
 
   Widget _calculate() {
     return Container(
@@ -542,30 +559,80 @@ class _AltitudeState extends State<Altitude> {
             print(number.toString());
 
             if (required == p){
-              if (requiredSubType == 'Pascal'){
-                if (number<P_11000_Pa){
 
-                  print('hello');
+              if (requiredSubType == 'Pascal'){
+
+                if (number>=22625.0221 && number<=101325){
+
+
+                  print(((288.16*((pow((number/101325),((-0.0065)*(287.08)/-9.81))))-1)/LR_1_met)+0);
+
+                  var a = (pow((22625.0220962355/101325),((-0.0065*287.08)/-9.81)))-1;
+                  a = ((288.16 * a ) / -0.0065 ) + 0;
+                  print (a);
+
+                  // ROUND OFF DECEMAL 2
+//                  print(double.parse(a).toStringAsFixed(2));
+
+
+                  //print(((288.16 * ((pow((22625.0220962355/101325),((-0.0065*287.08)/-9.81)))-1) ) / -0.0065 ) + 0);
+
+//                  print(double.parse(a).toStringAsFixed(2));
+
+//                  print(T_0_K * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))));
 
 //                  print (((((number/P_0_Pa)^(1/5.26))-1)*T_0_K)/LR_1_met + "meters");
-                } else if (number>P_11000_Pa && number<P_25000_Pa){
-//                  print ((ln(P_input/P_11000_Pa))*((R_met*T_11000)/g_met)+11000 + "meters")
 
-                } else if (number>P_25000_Pa && number<P_47000_Pa){
-//                  print ((((((P_input/P_25000_Pa)^(1/5.26))-1)*T_11000)/LR_2_met)+11000 + "meters")
+
+                } else if (number>=2486.742462 && number<22625.0221){
+
+                  print((((287.08*216.66)*(log(number/22625.0221)))/-9.81)+11000);
+
+                } else if (number>=120.27788 && number<2486.742462){
+
+                  print((((216.66*(pow((number/2486.742462),((0.003*287.08)/-9.81))-1))/0.003))+25000);
+
+                } else if (number>=58.23262684 && number<120.27788){
+
+                  print((((287.08*282.66)*(log(number/120.27788)))/-9.81)+47000);
+
+                } else if (number>=1.007100672 && number<58.23262684){
+
+                  print((((282.66*(pow((number/58.23262684),((-0.0045*287.08)/-9.81))-1))/-0.0045))+53000);
+
+                } else if (number>=0.1041462713 && number<1.007100672){
+
+                  print((((287.08*165.66)*(log(number/1.007100672)))/-9.81)+79000);
+
+                } else if (number>=0.007427951993 && number<0.1041462713){
+
+                  print((((165.66*(pow((number/0.1041462713),((0.004*287.08)/-9.81))-1))/0.004))+90000);
 
                 }
+
+
+
               } else if (requiredSubType == 'atm'){
 
 
               }
 
 
-
             } else if (required == d) {
 
+              if (number>=0.3638006285 && number<=1.225){
 
+                print((288.16*( pow((number/1.225),(1/(-9.81/(-0.0065*287.08)-1))) -1)/-0.0065));
 
+              } else if (number>=0.0399857497 && number<0.3638006285){
+
+                print((((287.08*216.66)*(log(number/0.3638006285)))/-9.81)+11000);
+
+              } else if (number>=0.001482431319 && number<0.0399857497){
+
+                print((216.66*( pow((number/0.0399857497),(1/(-9.81/(0.003*287.08)-1))) -1)/0.003)+25000);
+
+              }
 
 
             } else if (required == t){
