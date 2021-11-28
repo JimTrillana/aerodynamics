@@ -557,7 +557,7 @@ class _RatioState extends State<Ratio> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-      backdropColor:  getColorHex("#caecfc"),
+      backdropColor:  getColorHex("#ffffff"),
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),

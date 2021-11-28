@@ -714,7 +714,7 @@ class _layerParamState extends State<layerParam> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-        backdropColor:  getColorHex("#caecfc"),
+        backdropColor:  getColorHex("#ffffff"),
         controller: _advancedDrawerController,
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),

@@ -16,6 +16,11 @@ class _SideBarState extends State<SideBar> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/sidebarbg.png"),
+              fit: BoxFit.fill,
+            )),
         child: ListTileTheme(
           textColor: Colors.white,
           iconColor: Colors.white,
