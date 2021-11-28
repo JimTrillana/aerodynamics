@@ -36,17 +36,18 @@ class _SideBarState extends State<SideBar> {
                   margin: EdgeInsets.only(bottom: 30.0),
                   child:  Text("AerodynamicX",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
+                      style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
 
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0,),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: InkWell(
                   onTap: (){
+                    Navigator.pop(context);
                     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: homePage()));
                   },
                   child: Row(
@@ -73,13 +74,14 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0,),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: InkWell(
                   onTap: (){
+                    Navigator.pop(context);
                     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: layerParam()));
                   },
                   child: Row(
@@ -110,13 +112,14 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0,),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: InkWell(
                   onTap: (){
+                    Navigator.pop(context);
                     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: Altitude()));
                   },
                   child: Row(
@@ -148,13 +151,14 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0,),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: InkWell(
                   onTap: (){
+                    Navigator.pop(context);
                     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: Ratio()));
                   },
                   child: Row(

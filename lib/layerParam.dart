@@ -121,12 +121,16 @@ class _layerParamState extends State<layerParam> {
       margin: EdgeInsets.only(top: 15.0),
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width-30,
-        decoration: ShapeDecoration(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
           color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(-1, 2),
+              blurRadius: 1,
+            ),
+          ],
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -208,11 +212,12 @@ class _layerParamState extends State<layerParam> {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.black)),
-          focusedBorder: InputBorder.none,
+              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
+          focusedBorder: new OutlineInputBorder(
+              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
 //            enabledBorder: InputBorder.none,
           errorBorder: OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.red)),
+              borderSide: new BorderSide(color: Colors.red,  width: 1.5)),
           disabledBorder: InputBorder.none,
 //            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
 //            border: InputBorder.none,
@@ -251,6 +256,7 @@ class _layerParamState extends State<layerParam> {
       ),
       child: FlatButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (!_formula1Form.currentState.validate()) {
             return;
           } else {
@@ -708,7 +714,7 @@ class _layerParamState extends State<layerParam> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-        backdropColor:  getColorHex("#2592b3"),
+        backdropColor:  getColorHex("#caecfc"),
         controller: _advancedDrawerController,
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
@@ -748,6 +754,7 @@ class _layerParamState extends State<layerParam> {
                   color: getColorHex("#31a9dd"),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
                   ),
                 ),
                   child:   Text("Layer Parameters",

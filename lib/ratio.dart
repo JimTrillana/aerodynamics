@@ -4,7 +4,7 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
-
+bool imperialSelected, metricSelected;
 Color getColorHex(String hexColor) {
   hexColor = hexColor.toUpperCase().replaceAll('#', '');
   if (hexColor.length == 6) {
@@ -21,6 +21,14 @@ class Ratio extends StatefulWidget {
 class _RatioState extends State<Ratio> {
   final _advancedDrawerController = AdvancedDrawerController();
 
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      imperialSelected = false;
+      metricSelected = true;
+    });
+  }
   var finalAnswer ;
   String required= 'Pressure', units;
   int number;
@@ -110,7 +118,7 @@ class _RatioState extends State<Ratio> {
                 required = newValue;
               });
             },
-            items: <String>['Pressure', 'Temperature', 'Density', 'Pressure Altitude', 'Density Altitude', 'Temperature Altitude', 'Pressure ratio', 'Density ratio']
+            items: <String>['Pressure', 'Density',]
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -143,6 +151,19 @@ class _RatioState extends State<Ratio> {
           ),
           onPressed: (){
             changeIndex(index);
+            changeIndex(index);
+            if(index == 0){
+              setState(() {
+                imperialSelected = false;
+                metricSelected = true;
+              });
+            }
+            else if(index == 1){
+              setState(() {
+                imperialSelected = true;
+                metricSelected = false;
+              });
+            }
           },
           child: Text(value, style: TextStyle(
             color: currentIndex == index ? Colors.white : Colors.blueGrey,
@@ -164,19 +185,17 @@ class _RatioState extends State<Ratio> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          focusedBorder: InputBorder.none,
+          border: new OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
+          focusedBorder: new OutlineInputBorder(
+              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
 //            enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.red,  width: 1.5)),
           disabledBorder: InputBorder.none,
-//            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-//            border: InputBorder.none,
-          border: UnderlineInputBorder(
-              borderRadius:BorderRadius.circular(10.0)),
-//            border: Border.all(color:Colors.grey, width: 1),
-//            prefixIcon: Icon(Icons.lock),
-          fillColor: Colors.grey[100],
+          fillColor: Colors.white,
           filled: true,
-          labelText: "Enter number in km",
+          labelText: "Enter number",
         ),
         validator: (String val) {
           if (val.isEmpty) {
@@ -538,7 +557,7 @@ class _RatioState extends State<Ratio> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-      backdropColor:  getColorHex("#2592b3"),
+      backdropColor:  getColorHex("#caecfc"),
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -563,23 +582,111 @@ class _RatioState extends State<Ratio> {
             ),
           ),
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height/10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: getColorHex("#31a9dd"),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(25),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/mobile52opac.png"),
+                fit: BoxFit.cover,
+              )),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height/10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: getColorHex("#31a9dd"),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  ),
+                ),
+                child:   Text("Ratio",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+              ),
+              Expanded(
+                child: Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Form(
+                              key: _formula1Form,
+                              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                                _requiredTextField(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width-30,
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: _number()),
+                                      SizedBox(width: 5.0,),
+                                      Visibility(
+                                          visible: metricSelected,
+                                          child: Text("km", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                      Visibility(
+                                          visible: imperialSelected,
+                                          child: Text("ft", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width-30,
+                                  child: Row(
+                                    children: [
+                                      _radioButton('Metric',  getColorHex('#3dabde'), 0),
+                                      SizedBox(width: 10.0,),
+                                      _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                _calculate(),
+                                SizedBox(height: 20.0),
+                                finalAnswer != null ?
+                                Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: MediaQuery.of(context).size.width-30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(-1, 2),
+                                          blurRadius: 1,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                            maxLines:5),
+                                        SizedBox(height: 5.0,),
+                                        Text(finalAnswer),
+                                      ],
+                                    )) : Container(),
+                              ]),
+                            )),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              child:   Text("Ratio",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       drawer: SideBar(),
