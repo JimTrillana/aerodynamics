@@ -33,7 +33,7 @@ class _SideBarState extends State<SideBar> {
                   bottom: 10.0,
                 ),
                 child: Image.asset(
-                  'assets/logo2.png',
+                  'assets/logo3.png',
                 ),
               ),
               Container(
