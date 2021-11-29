@@ -47,9 +47,9 @@ class _homePageState extends State<homePage> {
                     child: Container(
                       height: MediaQuery.of(context).size.height / 3.8,
                       margin: EdgeInsets.only(
-                          left: 30, right: 30, top: 10.0, bottom: 10.0),
+                          left: 30, right: 30, ),
                       child: Image.asset(
-                        'assets/logo7.png',
+                        'assets/logo16.png',
                         fit: BoxFit.fitWidth,
                       ),
                     ),

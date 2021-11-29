@@ -96,47 +96,6 @@ class _AltitudeState extends State<Altitude> {
     });
   }
 
-  var P_0_psf = 2116.8;
-  var P_0_psi = 14.7;
-  var P_0_Pa = 101325;
-  var P_0_atm = 1;
-  var P_36080_psf = 473.0232826;
-  var P_36080_psi = 3.284883907;
-  var P_11000_Pa = 22606.82333;
-  var P_11000_atm = 0.2231119993;
-  var P_82000_psf = 51.90922594;
-  var P_82000_psi = 0.3604807357;
-  var P_25000_Pa = 2484.742214;
-  var P_25000_atm = 0.02452249903;
-  var P_154160_psf = 2.510727083;
-  var P_154160_psi = 0.01743560474;
-  var P_47000_Pa = 120.1811327;
-  var P_47000_atm = 0.00186095561;
-
-  var rho_0_imp = 0.002377;
-  var rho_0_met = 1.225;
-  var rho_36080 = 0.0007066855948;
-  var rho_11000 = 0.3635080001;
-  var rho_82000 = 0.00007785731502;
-  var rho_25000 = 0.03995358658;
-  var rho_154160 = 0.000002895429787;
-  var rho_47000 = 0.001481238904;
-
-  var T_0_R = 519;
-  var T_0_K = 288.16;
-  var T_36080 = 390.33872;
-  var T_11000 = 216.66;
-
-  var LR_1_imp = -0.003566;
-  var LR_1_met = -0.0065;
-  var LR_2_imp = 0.001645846154;
-  var LR_2_met = 0.003;
-
-  var g_imp = -32.174;
-  var g_met = -9.81;
-  var R_imp = 1716;
-  var R_met = 288.16;
-
   @override
   void initState() {
     super.initState();
@@ -384,80 +343,165 @@ class _AltitudeState extends State<Altitude> {
     );
   }
 
-  void _pressurePascalGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+  void _metPressurePascalGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
 
-    print(double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(2)));
+    print(double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(3)));
 
-    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(2));
-    var removeDecimal = ans.toString().split('.')[0];
+    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
 
     setState(() {
-      finalAnswer = '${int.parse(removeDecimal)} m';
+//      finalAnswer = '${int.parse(removeDecimal)} m';
+      finalAnswer = '${double.parse((ans).toStringAsFixed(3))} m';
     });
 
   }
 
-  void _pressurePascalIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
+  void _metPressurePascalIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
 
     print('iso layer');
-    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2)));
+    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3)));
 
-    double ans = double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2));
-    var removeDecimal = ans.toString().split('.')[0];
+    double ans = double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
 
     setState(() {
-      finalAnswer = '${int.parse(removeDecimal)} m';
+//      finalAnswer = '${int.parse(removeDecimal)} m';
+      finalAnswer = '${double.parse((ans).toStringAsFixed(3))} m';
     });
 
   }
 
-  void _pressureAtmGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+  void _metPressureAtmGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
 
     print('pressure atm gradient');
 
-    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(2));
-    var removeDecimal = ans.toString().split('.')[0];
+    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*287.08)/-9.81))-1))/a))+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
 
     setState(() {
-      finalAnswer = '${int.parse(removeDecimal)/101325} ';
+//      finalAnswer = '${int.parse(removeDecimal)/101325} ';
+      finalAnswer = '${double.parse((ans/101325).toStringAsFixed(3))} ';
     });
 
   }
 
-  void _pressureAtmIsothermalLayer(double temp, double numInput, double pDen, double ho) {
+  void _metPressureAtmIsothermalLayer(double temp, double numInput, double pDen, double ho) {
 
     print('atm iso layer');
 
-    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2)));
+    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3)));
 
-    double ans = double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2));
-    var removeDecimal = ans.toString().split('.')[0];
+    double ans = double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
 
     setState(() {
-      finalAnswer = '${int.parse(removeDecimal)/101325} m';
+//      finalAnswer = '${int.parse(removeDecimal)/101325} m';
+      finalAnswer = '${double.parse((ans/101325).toStringAsFixed(3))} m';
+
     });
 
   }
 
 
-  void _densityGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+  void _metDensityGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
 
     print('here at den grad layer');
-    print(double.parse(((temp*( pow((number/pDen),(1/(-9.81/(a*287.08)-1))) -1)/a)+ho).toStringAsFixed(2)));
+    print(double.parse(((temp*( pow((numInput/pDen),(1/(-9.81/(a*287.08)-1))) -1)/a)+ho).toStringAsFixed(3)));
 
     setState(() {
-      finalAnswer = '${double.parse(((temp*( pow((number/pDen),(1/(-9.81/(a*287.08)-1))) -1)/a)+ho).toStringAsFixed(2))} m';
+      finalAnswer = '${double.parse(((temp*( pow((numInput/pDen),(1/(-9.81/(a*287.08)-1))) -1)/a)+ho).toStringAsFixed(3))} m';
     });
 
   }
 
-  void _densityIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
+  void _metDensityIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
 
     print('here at den iso layer');
-    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2)));
+    print(double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3)));
 
     setState(() {
-      finalAnswer = '${double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(2))} m';
+      finalAnswer = '${double.parse(((((287.08*temp)*(log(numInput/pDen)))/-9.81)+ho).toStringAsFixed(3))} m';
+    });
+
+  }
+
+  void _impPressurePsfGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+
+    print(double.parse(((((temp*(pow((numInput/pDen),((a*1716)/-32.174))-1))/a))+ho).toStringAsFixed(3)));
+
+    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*1716)/-32.174))-1))/a))+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
+
+    setState(() {
+//      finalAnswer = '${int.parse(removeDecimal)} ft';
+      finalAnswer = '${double.parse((ans).toStringAsFixed(3))} ft';
+    });
+
+  }
+
+  void _impPressurePsfIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
+
+    print('iso layer');
+    print(double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3)));
+
+    double ans = double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
+
+    setState(() {
+//      finalAnswer = '${int.parse(removeDecimal)} ft';
+      finalAnswer = '${double.parse((ans).toStringAsFixed(3))} ft';
+    });
+
+  }
+
+  void _impPressurePsiGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+
+    print(double.parse(((((temp*(pow((numInput/pDen),((a*1716)/-32.174))-1))/a))+ho).toStringAsFixed(3)));
+
+    double ans = double.parse(((((temp*(pow((numInput/pDen),((a*1716)/-32.174))-1))/a))+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
+
+    setState(() {
+//      finalAnswer = '${int.parse(removeDecimal)/144} ft';
+      finalAnswer = '${double.parse((ans/144).toStringAsFixed(3))} ft';
+    });
+
+  }
+
+  void _impPressurePsiIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
+
+    print('iso layer');
+    print(double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3)));
+
+    double ans = double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3));
+//    var removeDecimal = ans.toString().split('.')[0];
+
+    setState(() {
+//      finalAnswer = '${int.parse(removeDecimal)/144} ft';
+      finalAnswer = '${double.parse((ans/144).toStringAsFixed(3))} ft';
+    });
+
+  }
+
+  void _impDensityGradientLayer(double temp, double numInput, double pDen, double a, double ho ) {
+
+    print('here at den grad layer');
+    print(double.parse(((temp*( pow((numInput/pDen),(1/(-32.174/(a*1716)-1))) -1)/a)+ho).toStringAsFixed(3)));
+
+    setState(() {
+      finalAnswer = '${double.parse(((temp*( pow((numInput/pDen),(1/(-32.174/(a*1716)-1))) -1)/a)+ho).toStringAsFixed(3))} slug/ft^3';
+    });
+
+  }
+
+  void _impDensityIsothermalLayer(double temp, double numInput, double pDen, double ho ) {
+
+    print('here at den iso layer');
+    print(double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3)));
+
+    setState(() {
+      finalAnswer = '${double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3))} slug/ft^3';
     });
 
   }
@@ -482,109 +526,228 @@ class _AltitudeState extends State<Altitude> {
             print(requiredSubType);
             print(number.toString());
 
-            if (required == p){
 
-              if (requiredSubType == 'Pascal'){
+            // METRIC
+            if (currentIndex == 0) {
 
-                if (number>=22625.0221 && number<=101325){
+              if (required == p){
 
-                  _pressurePascalGradientLayer(288.16, number, 101325, -0.0065, 0);
+                if (requiredSubType == 'Pascal'){
 
-                } else if (number>=2486.742462 && number<22625.0221){
+                  if (number>=22625.0221 && number<=101325){
 
-                  _pressurePascalIsothermalLayer(216.66, number, 22625.0221, 11000);
+                    _metPressurePascalGradientLayer(288.16, number, 101325, -0.0065, 0);
 
-                } else if (number>=120.27788 && number<2486.742462){
+                  } else if (number>=2486.742462 && number<22625.0221){
 
-                  _pressurePascalGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
+                    _metPressurePascalIsothermalLayer(216.66, number, 22625.0221, 11000);
 
-                } else if (number>=58.23262684 && number<120.27788){
+                  } else if (number>=120.27788 && number<2486.742462){
 
-                  _pressurePascalIsothermalLayer(282.66, number, 120.27788, 47000);
+                    _metPressurePascalGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
 
-                } else if (number>=1.007100672 && number<58.23262684){
+                  } else if (number>=58.23262684 && number<120.27788){
 
-                  _pressurePascalGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
+                    _metPressurePascalIsothermalLayer(282.66, number, 120.27788, 47000);
 
-                } else if (number>=0.1041462713 && number<1.007100672){
+                  } else if (number>=1.007100672 && number<58.23262684){
 
-                  _pressurePascalIsothermalLayer(165.66, number, 1.007100672, 79000);
+                    _metPressurePascalGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
 
-                } else if (number>=0.007427951993 && number<0.1041462713){
+                  } else if (number>=0.1041462713 && number<1.007100672){
 
-                  _pressurePascalGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+                    _metPressurePascalIsothermalLayer(165.66, number, 1.007100672, 79000);
+
+                  } else if (number>=0.007427951993 && number<0.1041462713){
+
+                    _metPressurePascalGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+
+                  }
+
+
+                } else if (requiredSubType == 'atm'){
+
+                  if (number>=22625.0221 && number<=101325){
+
+                    _metPressureAtmGradientLayer(288.16, number, 101325, -0.0065, 0);
+
+                  } else if (number>=2486.742462 && number<22625.0221){
+
+                    _metPressureAtmIsothermalLayer(216.66, number, 22625.0221, 11000);
+
+                  } else if (number>=120.27788 && number<2486.742462){
+
+                    _metPressureAtmGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
+
+                  } else if (number>=58.23262684 && number<120.27788){
+
+                    _metPressureAtmIsothermalLayer(282.66, number, 120.27788, 47000);
+
+                  } else if (number>=1.007100672 && number<58.23262684){
+
+                    _metPressureAtmGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
+
+                  } else if (number>=0.1041462713 && number<1.007100672){
+
+                    _metPressureAtmIsothermalLayer(165.66, number, 1.007100672, 79000);
+
+                  } else if (number>=0.007427951993 && number<0.1041462713){
+
+                    _metPressureAtmGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+
+                  }
 
                 }
 
 
-              } else if (requiredSubType == 'atm'){
+              } else if (required == d) {
 
-                if (number>=22625.0221 && number<=101325){
+                if (number>=0.3638006285 && number<=1.225){
 
-                  _pressureAtmGradientLayer(288.16, number, 101325, -0.0065, 0);
+                  _metDensityGradientLayer(288.16, number, 1.225,-0.0065 , 0);
 
-                } else if (number>=2486.742462 && number<22625.0221){
+                } else if (number>=0.0399857497 && number<0.3638006285){
 
-                  _pressureAtmIsothermalLayer(216.66, number, 22625.0221, 11000);
+                  _metDensityIsothermalLayer( 216.66, number, 0.3638006285, 11000 );
 
-                } else if (number>=120.27788 && number<2486.742462){
+                } else if (number>=0.001482431319 && number<0.0399857497){
 
-                  _pressureAtmGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
+                  _metDensityGradientLayer(216.66, number, 0.0399857497,0.003 , 25000);
 
-                } else if (number>=58.23262684 && number<120.27788){
+                } else if (number>=0.0007177202478 && number<0.001482431319) {
 
-                  _pressureAtmIsothermalLayer(282.66, number, 120.27788, 47000);
+                  _metDensityIsothermalLayer( 282.66, number, 0.001482431319, 47000 );
 
-                } else if (number>=1.007100672 && number<58.23262684){
+                } else if (number>=0.00002117914386 && number<0.0007177202478) {
 
-                  _pressureAtmGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
+                  _metDensityGradientLayer(282.66, number, 0.0007177202478, -0.0045 , 53000);
 
-                } else if (number>=0.1041462713 && number<1.007100672){
+                } else if (number>=0.000002190177134 && number<0.00002117914386) {
 
-                  _pressureAtmIsothermalLayer(165.66, number, 1.007100672, 79000);
+                  _metDensityIsothermalLayer( 165.66, number, 0.00002117914386, 79000 );
 
-                } else if (number>=0.007427951993 && number<0.1041462713){
+                } else if (number>=0.0000001146747168 && number<0.000002190177134) {
 
-                  _pressureAtmGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+                  _metDensityGradientLayer(165.66, number, 0.000002190177134, 0.004 , 90000);
 
                 }
 
               }
 
 
-            } else if (required == d) {
+              // IMPERIAL
+            } else if (currentIndex == 1) {
 
-              if (number>=0.3638006285 && number<=1.225){
+              if (required == p){
 
-                _densityGradientLayer(288.16, number, 1.225,-0.0065 , 0);
+                if (requiredSubType == 'psf'){
 
-              } else if (number>=0.0399857497 && number<0.3638006285){
+                  if (number>=473.3159716 && number<=2116.8){
 
-                _densityIsothermalLayer( 216.66, number, 0.3638006285, 11000 );
+                    _impPressurePsfGradientLayer(519, number, 2116.8, -0.003566, 0);
 
-              } else if (number>=0.001482431319 && number<0.0399857497){
+                  } else if (number>=52.14640142 && number<473.3159716){
 
-                _densityGradientLayer(216.66, number, 0.0399857497,0.003 , 25000);
+                    _impPressurePsfIsothermalLayer(390.33872, number, 473.3159716, 36080);
 
-              } else if (number>=0.0007177202478 && number<0.001482431319) {
+                  } else if (number>=2.529589985 && number<52.14640142){
 
-                _densityIsothermalLayer( 282.66, number, 0.001482431319, 47000 );
+                    _impPressurePsfGradientLayer(390.33872, number, 52.14640142, 0.001646341463, 82000);
 
-              } else if (number>=0.00002117914386 && number<0.0007177202478) {
+                  } else if (number>=1.225472385 && number<2.52958995){
 
-                _densityGradientLayer(282.66, number, 0.0007177202478, -0.0045 , 53000);
+                    _impPressurePsfIsothermalLayer(509.13872, number, 2.52958995, 154160);
 
-              } else if (number>=0.000002190177134 && number<0.00002117914386) {
+                  } else if (number>=0.02128756766 && number<1.225472385){
 
-                _densityIsothermalLayer( 165.66, number, 0.00002117914386, 79000 );
+                    _impPressurePsfGradientLayer(509.13872, number, 1.225472385, -0.002469512195, 173840);
 
-              } else if (number>=0.0000001146747168 && number<0.000002190177134) {
+                  } else if (number>=0.002208151928 && number<0.02128756766){
 
-                _densityGradientLayer(165.66, number, 0.000002190177134, 0.004 , 90000);
+                    _impPressurePsfIsothermalLayer(298.53872, number, 0.02128756766, 259120);
+
+                  } else if (number>=0.0001579851922 && number<0.002208151928){
+
+                    _impPressurePsfGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
+
+                  }
+
+
+                } else if (requiredSubType == 'psi'){
+
+                  if (number>=22625.0221 && number<=101325){
+
+                    _impPressurePsiGradientLayer(519, number, 2116.8, -0.003566, 0);
+
+                  } else if (number>=2486.742462 && number<22625.0221){
+
+                    _impPressurePsiIsothermalLayer(390.33872, number, 473.3159716, 36080);
+
+                  } else if (number>=2.529589985 && number<52.14640142){
+
+                    _impPressurePsiGradientLayer(390.33872, number, 52.14640142, 0.001646341463, 82000);
+
+                  } else if (number>=1.225472385 && number<2.52958995){
+
+                    _impPressurePsiIsothermalLayer(509.13872, number, 2.52958995, 154160);
+
+                  } else if (number>=0.02128756766 && number<1.225472385){
+
+                    _impPressurePsiGradientLayer(509.13872, number, 1.225472385, -0.002469512195, 173840);
+
+                  } else if (number>=0.002208151928 && number<0.02128756766){
+
+                    _impPressurePsiIsothermalLayer(298.53872, number, 0.02128756766, 259120);
+
+                  } else if (number>=0.0001579851922 && number<0.002208151928){
+
+                    _impPressurePsiGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
+
+                  }
+
+                }
+
+
+              } else if (required == d) {
+
+                if (number>=0.0007066855948 && number<=0.002377){
+
+                  _impDensityGradientLayer(519, number, 0.002377,-0.003566 , 0);
+
+                } else if (number>=0.00007785731502 && number<0.0007066855948){
+
+                  _impDensityIsothermalLayer( 390.33872, number, 0.0007066855948, 36080 );
+
+                } else if (number>=0.000002895547672 && number<0.00007785731502){ // check number condition
+
+                  _impDensityGradientLayer(390.33872, number, 0.00007785731502, 0.001646341463 , 82000);
+
+                } else if (number>=0.000001402762397 && number<0.000002895547672) {
+
+                  _impDensityIsothermalLayer( 509.13872, number, 0.000002895547672, 154160 );
+
+                } else if (number>=0.00000004155679898 && number<0.000001402762397) {
+
+                  _impDensityGradientLayer(509.13872, number, 0.000001402762397, -0.002469512195 , 173840);
+
+                } else if (number>=0.000000004310672185 && number<0.00000004155679898) {
+
+                  _impDensityIsothermalLayer( 298.53872, number, 0.00000004155679898, 259120 );
+
+                } else if (number>=0.0000000002264806903 && number<0.000000004310672185) {
+
+                  _impDensityGradientLayer( 298.53872, number, 0.000000004310672185, 0.002195121951 , 295200);
+
+                }
 
               }
+
 
             }
+
+
+
+
 
 
           }

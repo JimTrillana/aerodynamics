@@ -34,7 +34,7 @@ class _SideBarState extends State<SideBar> {
                   right: 25
                 ),
                 child: Image.asset(
-                  'assets/logo5.png',
+                  'assets/logo16.png',
                   fit: BoxFit.cover,
                 ),
               ),
