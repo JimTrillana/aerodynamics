@@ -30,22 +30,24 @@ class _SideBarState extends State<SideBar> {
               Container(
                 margin: const EdgeInsets.only(
                   top: 24.0,
-                  bottom: 10.0,
+                  left: 25,
+                  right: 25
                 ),
                 child: Image.asset(
-                  'assets/logo3.png',
+                  'assets/logo5.png',
+                  fit: BoxFit.cover,
                 ),
               ),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(bottom: 30.0),
+                  margin: EdgeInsets.only(bottom: 15.0),
                   child:  Text("AerodynamicX",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
 
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -79,7 +81,7 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -117,7 +119,7 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -156,7 +158,7 @@ class _SideBarState extends State<SideBar> {
               ),
               Container(
                 padding: EdgeInsets.all(15.0),
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,

@@ -2,7 +2,6 @@ import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
-import 'package:google_fonts/google_fonts.dart';
 
 bool imperialSelected, metricSelected;
 Color getColorHex(String hexColor) {
@@ -118,7 +117,7 @@ class _RatioState extends State<Ratio> {
                 required = newValue;
               });
             },
-            items: <String>['Pressure', 'Density',]
+            items: <String>['Pressure', 'Density', 'Temperature']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -576,11 +575,29 @@ class _RatioState extends State<Ratio> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
+                    size: 25,
                   ),
                 );
               },
             ),
           ),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(top: 5.0),
+              padding: EdgeInsets.all(10),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0) //
+                ),
+              ),
+              child: Image.asset(
+                'assets/logo5.png',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ],
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -592,7 +609,7 @@ class _RatioState extends State<Ratio> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height/10,
+                height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: getColorHex("#31a9dd"),
@@ -603,7 +620,7 @@ class _RatioState extends State<Ratio> {
                 ),
                 child:   Text("Ratio",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                    style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
               ),
               Expanded(
                 child: Container(
@@ -628,10 +645,10 @@ class _RatioState extends State<Ratio> {
                                       SizedBox(width: 5.0,),
                                       Visibility(
                                           visible: metricSelected,
-                                          child: Text("km", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                          child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
                                       Visibility(
                                           visible: imperialSelected,
-                                          child: Text("ft", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                          child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
                                     ],
                                   ),
                                 ),

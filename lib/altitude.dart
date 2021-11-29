@@ -2,7 +2,6 @@ import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
-import 'package:google_fonts/google_fonts.dart';
 
 bool imperialSelected, metricSelected;
 List <String>subType = [];
@@ -206,6 +205,53 @@ class _AltitudeState extends State<Altitude> {
                     selectedType = "Density Altitude";
                   });
                 }
+
+                if(newValue == "Choose Altitude"){
+                  setState(() {
+                    subType.clear();
+                    print(subType);
+                    dropdownValue2 = "--";
+                    required = newValue;
+                  });
+                }
+                else if(newValue == "Pressure Altitude" && currentIndex == 0){
+                  setState(() {
+                    subType.clear();
+                    subType.add("Pascal");
+                    subType.add("atm");
+                    print(subType);
+                    dropdownValue2 = "Pascal";
+                    required = newValue;
+                  });
+                }
+                else if(newValue == "Pressure Altitude" && currentIndex == 1){
+                  setState(() {
+                    subType.clear();
+                    subType.add("psf");
+                    subType.add("psi");
+                    print(subType);
+                    dropdownValue2 = "psf";
+                    required = newValue;
+                  });
+                }
+                else if(newValue == "Density Altitude"  && currentIndex == 0){
+                  setState(() {
+                    subType.clear();
+                    subType.add("kgm3");
+                    dropdownValue2 = "kgm3";
+                    print(subType);
+                    required = newValue;
+                  });
+                }
+                else if(newValue == "Density Altitude"  && currentIndex == 1){
+                  setState(() {
+                    subType.clear();
+                    subType.add("slugft3");
+                    dropdownValue2 = "slugft3";
+                    print(subType);
+                    required = newValue;
+                  });
+                }
               },
               items: <String>['Choose Altitude', 'Pressure Altitude', 'Density Altitude']
                   .map<DropdownMenuItem<String>>((String value) {
@@ -223,7 +269,6 @@ class _AltitudeState extends State<Altitude> {
   }
 
   Widget _radioButton(String value, Color color, int index, String type){
-
     return Expanded(
       child: Container(
         height: 50.0,
@@ -579,11 +624,29 @@ class _AltitudeState extends State<Altitude> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
+                    size: 25,
                   ),
                 );
               },
             ),
           ),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(top: 5.0),
+              padding: EdgeInsets.all(10),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0) //
+                ),
+              ),
+              child: Image.asset(
+                'assets/logo5.png',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ],
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -596,7 +659,7 @@ class _AltitudeState extends State<Altitude> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height/10,
+                  height: MediaQuery.of(context).size.height/11,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: getColorHex("#31a9dd"),
@@ -607,7 +670,7 @@ class _AltitudeState extends State<Altitude> {
                   ),
                   child:   Text("Altitude",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
                 ),
                 Expanded(
                   child: Container(

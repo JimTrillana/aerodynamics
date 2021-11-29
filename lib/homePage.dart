@@ -1,6 +1,5 @@
 import 'package:aerocal/ratio.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'altitude.dart';
 import 'layerParam.dart';
@@ -46,18 +45,11 @@ class _homePageState extends State<homePage> {
                 children: [
                   Center(
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 3.5,
+                      height: MediaQuery.of(context).size.height / 3.8,
                       margin: EdgeInsets.only(
-                          left: 30, right: 30, bottom: 5, top: 10.0),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(40.0) //
-                        ),
-                      ),
+                          left: 30, right: 30, top: 10.0, bottom: 10.0),
                       child: Image.asset(
-                        'assets/logo3.png',
+                        'assets/logo7.png',
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -66,7 +58,7 @@ class _homePageState extends State<homePage> {
                       width: MediaQuery.of(context).size.width,
                       child:  Text("AerodynamicX",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blueGrey))),
+                          style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 26, color: Colors.blueGrey))),
                   SizedBox(height:120),
                   Container(
                     margin: EdgeInsets.only(top: 20.0),

@@ -18,7 +18,7 @@ Future main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: CustomSplash(
-      imagePath: 'assets/logo3.png',
+      imagePath: 'assets/splashscreenplane.png',
       backGroundColor: Colors.white,
       // backGroundColor: Color(0xfffc6042),
       animationEffect: 'zoom-in',

@@ -1,7 +1,6 @@
 import 'package:aerocal/side_drawer.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 bool imperialSelected, metricSelected;
@@ -722,7 +721,7 @@ class _layerParamState extends State<layerParam> {
         appBar:  AppBar(
           titleSpacing: 0,
           elevation: 0.0,
-          backgroundColor: getColorHex("#31a9dd"),
+          backgroundColor: getColorHex("#39aedb"),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -733,11 +732,29 @@ class _layerParamState extends State<layerParam> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
+                    size: 25,
                   ),
                 );
               },
             ),
           ),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(top: 5.0),
+              padding: EdgeInsets.all(10),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(40.0) //
+                ),
+              ),
+              child: Image.asset(
+                'assets/logo5.png',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ],
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -748,10 +765,10 @@ class _layerParamState extends State<layerParam> {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height/10,
+                height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: getColorHex("#31a9dd"),
+                  color: getColorHex("#39aedb"),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25),
@@ -759,7 +776,7 @@ class _layerParamState extends State<layerParam> {
                 ),
                   child:   Text("Layer Parameters",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
               ),
               Expanded(
                 child: Container(
@@ -784,10 +801,10 @@ class _layerParamState extends State<layerParam> {
                                       SizedBox(width: 5.0,),
                                       Visibility(
                                         visible: metricSelected,
-                                          child: Text("km", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                          child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
                                       Visibility(
                                           visible: imperialSelected,
-                                          child: Text("ft", style: GoogleFonts.poppins( fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blueGrey))),
+                                          child: Text("ft",  style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
                                     ],
                                   ),
                                 ),
