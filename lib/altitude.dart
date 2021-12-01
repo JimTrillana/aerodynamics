@@ -99,6 +99,7 @@ class _AltitudeState extends State<Altitude> {
   @override
   void initState() {
     super.initState();
+    finalAnswer = null;
     subType.clear();
     imperialSelected = false;
     metricSelected = true;
@@ -181,6 +182,7 @@ class _AltitudeState extends State<Altitude> {
                     print(subType);
                     dropdownValue2 = "Pascal";
                     required = newValue;
+                    requiredSubType = "Pascal";
                   });
                 }
                 else if(newValue == "Pressure Altitude" && currentIndex == 1){
@@ -191,6 +193,7 @@ class _AltitudeState extends State<Altitude> {
                     print(subType);
                     dropdownValue2 = "psf";
                     required = newValue;
+                    requiredSubType = "psf";
                   });
                 }
                 else if(newValue == "Density Altitude"  && currentIndex == 0){
@@ -200,6 +203,7 @@ class _AltitudeState extends State<Altitude> {
                     dropdownValue2 = "kgm3";
                     print(subType);
                     required = newValue;
+                    requiredSubType = "kgm3";
                   });
                 }
                 else if(newValue == "Density Altitude"  && currentIndex == 1){
@@ -207,6 +211,7 @@ class _AltitudeState extends State<Altitude> {
                     subType.clear();
                     subType.add("slugft3");
                     dropdownValue2 = "slugft3";
+                    requiredSubType = "slugft3";
                     print(subType);
                     required = newValue;
                   });
@@ -254,6 +259,7 @@ class _AltitudeState extends State<Altitude> {
                 subType.add("atm");
                 print(subType);
                 dropdownValue2 = "Pascal";
+                requiredSubType = "Pascal";
                 required = type;
               });
             }
@@ -264,6 +270,7 @@ class _AltitudeState extends State<Altitude> {
                 subType.add("psi");
                 print(subType);
                 dropdownValue2 = "psf";
+                requiredSubType = "psf";
                 required = type;
               });
             }
@@ -272,6 +279,7 @@ class _AltitudeState extends State<Altitude> {
                 subType.clear();
                 subType.add("kgm3");
                 dropdownValue2 = "kgm3";
+                requiredSubType = "kgm3";
                 print(subType);
                 required = type;
               });
@@ -281,6 +289,7 @@ class _AltitudeState extends State<Altitude> {
                 subType.clear();
                 subType.add("slugft3");
                 dropdownValue2 = "slugft3";
+                requiredSubType = "slugft3";
                 print(subType);
                 required = type;
               });
