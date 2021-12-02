@@ -753,7 +753,7 @@ class _RatioState extends State<Ratio> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, bottom: 10.0),
+                margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0,),
                 height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -766,9 +766,9 @@ class _RatioState extends State<Ratio> {
                   ),
                 ),
                 child: Center(
-                  child: Text("Ratio",
+                  child: Text("RATIO",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,    letterSpacing: 2)),
                 ),
               ),
               Expanded(
@@ -819,10 +819,10 @@ class _RatioState extends State<Ratio> {
                                     SizedBox(width: 5.0,),
                                     Visibility(
                                         visible: metricSelected,
-                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
                                     Visibility(
                                         visible: imperialSelected,
-                                        child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                        child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
                                   ],
                                 ),
                               ),

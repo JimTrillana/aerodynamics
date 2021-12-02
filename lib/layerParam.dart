@@ -749,7 +749,7 @@ class _layerParamState extends State<layerParam> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, bottom: 10.0),
+                margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0,),
                 height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -762,9 +762,9 @@ class _layerParamState extends State<layerParam> {
                   ),
                 ),
                   child:   Center(
-                    child: Text("Layer Parameters",
+                    child: Text("LAYER PARAMETERS",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                        style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,  letterSpacing: 2)),
                   ),
               ),
               Expanded(
@@ -815,10 +815,10 @@ class _layerParamState extends State<layerParam> {
                                     SizedBox(width: 5.0,),
                                     Visibility(
                                         visible: metricSelected,
-                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
                                     Visibility(
                                         visible: imperialSelected,
-                                        child: Text("ft",  style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                        child: Text("ft",  style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
                                   ],
                                 ),
                               ),

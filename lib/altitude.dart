@@ -731,7 +731,7 @@ class _AltitudeState extends State<Altitude> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, bottom: 10.0),
+                  margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, ),
                   height: MediaQuery.of(context).size.height/11,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -744,9 +744,9 @@ class _AltitudeState extends State<Altitude> {
                     ),
                   ),
                   child:  Center(
-                    child: Text("Altitude",
+                    child: Text("ALTITUDE",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                        style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,  letterSpacing: 2)),
                   ),
                 ),
                 Expanded(
