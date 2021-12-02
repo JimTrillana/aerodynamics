@@ -123,7 +123,7 @@ class _RatioState extends State<Ratio> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey,
+              color: Colors.white,
               offset: Offset(-1, 1),
               blurRadius: 2,
             ),
@@ -746,7 +746,7 @@ class _RatioState extends State<Ratio> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/bg2.png"),
+                image: AssetImage("assets/mobile85opac2.png"),
                 fit: BoxFit.cover,
               )),
           child: Column(
@@ -757,7 +757,7 @@ class _RatioState extends State<Ratio> {
                 height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: getColorHex("#31a9dd"),
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(15),
                     bottomLeft: Radius.circular(15),
@@ -786,7 +786,7 @@ class _RatioState extends State<Ratio> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey,
+                                color: Colors.white,
                                 offset: Offset(-1, 1),
                                 blurRadius: 3,
                               ),
