@@ -30,7 +30,7 @@ class _RatioState extends State<Ratio> {
   }
   var finalAnswer ;
   String required= 'Pressure', units;
-  int number;
+  double number;
   String p = 'Pressure', t = 'Temperature', d = 'Density';
   String i = 'imperial', m = 'metric';
 
@@ -234,10 +234,10 @@ class _RatioState extends State<Ratio> {
           return null;
         },
         onChanged: (String val) {
-          number = int.parse(val);
+          number = double.parse(val);
         },
         onSaved: (String value) {
-          number = int.parse(value);
+          number = double.parse(value);
         },
       ),
     );
@@ -265,7 +265,6 @@ class _RatioState extends State<Ratio> {
 
 
             // IMPERIAL
-//            if (units == i.toLowerCase()) {
             if (currentIndex == 1) {
 
               if (number <= 36080) {
@@ -273,11 +272,11 @@ class _RatioState extends State<Ratio> {
                 print(required);
                 if (required == p) {
 
-                  print((P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))/2116.8));
-//                  print('${pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psf or ${pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psi');
+                  print((P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))/2116.8) );
+
                   // CHECK PSI
                   setState(() {
-                    finalAnswer = '${(P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))/2116.8)}';
+                    finalAnswer = '${(P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))/2116.8)} or ${((P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp)))))/144)/14.7} ';
                   });
 
                 } else if (required == d) {
@@ -301,11 +300,10 @@ class _RatioState extends State<Ratio> {
 
                 if (required == p) {
 
-                  //CHECK PSI
-                  print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
+                  print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf');
 
                   setState(() {
-                    finalAnswer = '${(P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080)))))/2116.8}';
+                    finalAnswer = '${(P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080)))))/2116.8} or ${((P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080)))))/144)/14.7}';
                   });
 
 
@@ -334,7 +332,7 @@ class _RatioState extends State<Ratio> {
                   print(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))));
 
                   setState(() {
-                    finalAnswer = '${(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))))/2116.8}';
+                    finalAnswer = '${(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))))/2116.8} or ${((P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))))/144)/14.7}';
                   });
 
                 } else if (required == d) {
@@ -363,7 +361,7 @@ class _RatioState extends State<Ratio> {
                   print('${P_154160_psf * (pow(e, ((g_imp / (R_imp * 509.13872)) * (number - 154160))))} psf ');
 
                   setState(() {
-                    finalAnswer = '${(P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160)))))/2116.8} ';
+                    finalAnswer = '${(P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160)))))/2116.8} or ${((P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160)))))/144)/14.7}';
                   });
 
                 } else if (required == d) {
@@ -391,7 +389,7 @@ class _RatioState extends State<Ratio> {
                   print(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))));
 
                   setState(() {
-                    finalAnswer = '${(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))))/2116.8} ';
+                    finalAnswer = '${(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))))/2116.8} or ${((P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))))/144)/14.7}';
                   });
 
                 } else if (required == d) {
@@ -420,7 +418,7 @@ class _RatioState extends State<Ratio> {
                   print('${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf ');
 
                   setState(() {
-                    finalAnswer = '${(P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120)))))/2116.8} ';
+                    finalAnswer = '${(P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120)))))/2116.8} or ${((P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120)))))/144)/14.7}';
                   });
 
                 } else if (required == d) {
@@ -449,7 +447,7 @@ class _RatioState extends State<Ratio> {
                   print(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))));
 
                   setState(() {
-                    finalAnswer = '${(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))))/2116.8}';
+                    finalAnswer = '${(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))))/2116.8} or ${((P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))))/144)/14.7}';
                   });
 
                 } else if (required == d) {
@@ -482,7 +480,7 @@ class _RatioState extends State<Ratio> {
 
                   print('${double.parse((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))).toStringAsFixed(2))} Pa or  ${double.parse((P_0_atm * pow(((T_0_K - (LR_1_met * number)) / T_0_K), 5.26)).toStringAsFixed(2))} atm');
                   setState(() {
-                    finalAnswer = '${(P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08))))/101325}';
+                    finalAnswer = '${(P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08))))/101325} or ${((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08))))/101325)/1}';
                   });
 
                 } else if (required == d) {
@@ -510,7 +508,7 @@ class _RatioState extends State<Ratio> {
                     number = number * 1000;
                     print(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))));
 
-                    finalAnswer = '${(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))))/101325}';
+                    finalAnswer = '${(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))))/101325} or ${((P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))))/101325)/1}';
                   });
 
 
@@ -542,7 +540,7 @@ class _RatioState extends State<Ratio> {
                   print(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))));
 
                   setState(() {
-                    finalAnswer = '${(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))))/101325}';
+                    finalAnswer = '${(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))))/101325} or ${((P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))))/101325)/1}';
                   });
 
 
@@ -571,7 +569,7 @@ class _RatioState extends State<Ratio> {
                   print(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
 
                   setState(() {
-                    finalAnswer = '${(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))))/101325}';
+                    finalAnswer = '${(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))))/101325} or ${((P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))))/101325)/1}';
                   });
 
                 } else if (required == d) {
@@ -596,7 +594,7 @@ class _RatioState extends State<Ratio> {
                   number *= 1000;
                   print(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))));
                   setState(() {
-                    finalAnswer =  '${(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))))/101325}';
+                    finalAnswer =  '${(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))))/101325} or ${((P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))))/101325)/1} ';
                   });
 
                 } else if (required == d){
@@ -627,7 +625,7 @@ class _RatioState extends State<Ratio> {
                   print('${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
 
                   setState(() {
-                    finalAnswer =  '${(P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000)))))/101325}';
+                    finalAnswer =  '${(P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000)))))/101325} or ${((P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000)))))/101325)/1} ';
                   });
 
                 } else if (required == d){
@@ -655,7 +653,7 @@ class _RatioState extends State<Ratio> {
                   print(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))));
 
                   setState(() {
-                    finalAnswer =  '${(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))))/101325}';
+                    finalAnswer =  '${(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))))/101325} or ${((P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))))/101325)/1}';
                   });
 
                 } else if (required == d){

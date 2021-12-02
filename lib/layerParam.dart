@@ -32,7 +32,7 @@ class _layerParamState extends State<layerParam> {
 
   var finalAnswer ;
   String required= 'Pressure', units;
-  int number;
+  double number;
   String p = 'Pressure', t = 'Temperature', d = 'Density';
   String i = 'imperial', m = 'metric';
 
@@ -236,10 +236,10 @@ class _layerParamState extends State<layerParam> {
           return null;
         },
         onChanged: (String val) {
-          number = int.parse(val);
+          number = double.parse(val);
         },
         onSaved: (String value) {
-          number = int.parse(value);
+          number = double.parse(value);
         },
       ),
     );
@@ -268,7 +268,6 @@ class _layerParamState extends State<layerParam> {
 
 
             // IMPERIAL
-//            if (units == i.toLowerCase()) {
             if (currentIndex == 1) {
 
               if (number <= 36080) {
@@ -277,10 +276,9 @@ class _layerParamState extends State<layerParam> {
                 if (required == p) {
 
                   print(P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp)))));
-//                  print('${pow(P_0_psf * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psf or ${pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)} psi');
-                  // CHECK PSI
+
                   setState(() {
-                    finalAnswer = '${P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))} psf or  ${double.parse((pow(P_0_psi * ((T_0_R - (LR_1_imp * number)) / T_0_R), 5.26)).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp))))} psf or  ${(P_0_psf * (pow((1 + ((LR_1_imp)*(number) / T_0_R) ), g_imp/(LR_1_imp*(R_imp)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -304,11 +302,10 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-                  //CHECK PSI
-                  print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
+                  print('${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf');
 
                   setState(() {
-                    finalAnswer = '${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or  ${double.parse((P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psf or  ${(P_36080_psf * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080)))))/144} psi';
                   });
 
 
@@ -335,13 +332,11 @@ class _layerParamState extends State<layerParam> {
                 if (required == p) {
 
                   //CHECK LR_2_IMP > 0.0016...
-                  //CHECK PSI
+
                   print(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))));
 
-//                  print('${P_82000_psf * (pow((1 + ((0.001646341)*(number-82000) / T_36080) ), g_imp/(0.001646341*(R_imp))))} psf or ${P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)} psi');
-
                   setState(() {
-                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp))))} psf or  ${double.parse((P_82000_psi * pow(((T_36080 + (LR_2_imp * (number - 82000))) / T_36080), 5.26)).toStringAsFixed(2))} psi';
+                    finalAnswer = '${P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp))))} psf or  ${(P_82000_psf * (pow((1 + ((0.001646341463)*(number-82000) / T_36080) ), g_imp/(0.001646341463*(R_imp)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -365,12 +360,10 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-                  //CHECK PSI
-
                   print('${P_154160_psf * (pow(e, ((g_imp / (R_imp * 509.13872)) * (number - 154160))))} psf ');
 
                   setState(() {
-                    finalAnswer = '${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf';
+                    finalAnswer = '${P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160))))} psf or ${(P_154160_psf * (pow(e, ((g_imp / (R_imp * T_154160)) * (number - 154160)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -398,7 +391,7 @@ class _layerParamState extends State<layerParam> {
                   print(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))));
 
                   setState(() {
-                    finalAnswer = '${P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp))))} psf ';
+                    finalAnswer = '${P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp))))} psf or ${(P_173840_psf * (pow((1 + ((-0.002469512195)*(number-173840) / 509.13872) ), g_imp/(-0.002469512195*(R_imp)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -424,12 +417,10 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-                  //CHECK PSI
-
                   print('${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf ');
 
                   setState(() {
-                    finalAnswer = '${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf';
+                    finalAnswer = '${P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120))))} psf or ${(P_259120_psf * (pow(e, ((g_imp / (R_imp * T_259120)) * (number - 259120)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -458,7 +449,7 @@ class _layerParamState extends State<layerParam> {
                   print(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))));
 
                   setState(() {
-                    finalAnswer = '${P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp))))} psf ';
+                    finalAnswer = '${P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp))))} psf or ${(P_295200_psf * (pow((1 + ((0.002195121951)*(number-295200) / T_259120) ), g_imp/(0.002195121951*(R_imp)))))/144} psi';
                   });
 
                 } else if (required == d) {
@@ -478,12 +469,10 @@ class _layerParamState extends State<layerParam> {
                   });
                 }
 
-
               }
             }
 
             // METRIC
-//            else if (units == m.toLowerCase()) {
             else if (currentIndex == 0) {
 
               if (number <= 11) {
@@ -492,12 +481,8 @@ class _layerParamState extends State<layerParam> {
 
                   print('${double.parse((P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))).toStringAsFixed(2))} Pa or  ${double.parse((P_0_atm * pow(((T_0_K - (LR_1_met * number)) / T_0_K), 5.26)).toStringAsFixed(2))} atm');
                   setState(() {
-                    finalAnswer = '${P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))} Pa';
+                    finalAnswer = '${P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08)))} Pa or ${(P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, -9.81/(-0.0065*287.08))))/101325} atm';
                   });
-
-//                  var a = P_0_Pa * (pow((T_0_K + (-6.5 * number)) / T_0_K, 5.26));
-//                  a = double.parse((a).toStringAsFixed(2));
-//                  print(a);
 
                 } else if (required == d) {
                   print (rho_0_met * pow((1+ ((-6.5 * number) / T_0_K)), (-9.81/(-0.0065*287.08))-1));
@@ -520,13 +505,11 @@ class _layerParamState extends State<layerParam> {
 
                 if (required == p) {
 
-
-                  // CHECK ATM
                   setState(() {
                     number = number * 1000;
                     print(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))));
 
-                    finalAnswer = '${P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000))))} Pa or  ${double.parse((P_11000_atm * (pow(e, ((g_met / (R_met * T_11000)) * (number - 36080))))).toStringAsFixed(2))} atm';
+                    finalAnswer = '${P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000))))} Pa or  ${(P_11000_Pa * (pow(e, ((g_met*(number-11000))/(287.08 * T_11000)))))/101325} atm';
                   });
 
 
@@ -558,7 +541,7 @@ class _layerParamState extends State<layerParam> {
                   print(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))));
 
                   setState(() {
-                    finalAnswer = '${P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08))))} Pa or  ${double.parse((P_25000_atm * pow(((T_11000 + (LR_2_imp * (number - 25000))) / T_11000), 5.26)).toStringAsFixed(2))} atm';
+                    finalAnswer = '${P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08))))} Pa or ${(P_25000_Pa * (pow((1 + ((0.003)*(number-25000) / 216.66) ), g_met/(0.003*(287.08)))))/101325} atm';
                   });
 
 
@@ -587,7 +570,7 @@ class _layerParamState extends State<layerParam> {
                   print(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))));
 
                   setState(() {
-                    finalAnswer = '${P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} Pa';
+                    finalAnswer = '${P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000))))} Pa or ${(P_47000_Pa * (pow (e, (g_met / (287.08 * 282.66) * (number - 47000)))))/101325} atm';
                   });
 
                 } else if (required == d) {
@@ -612,7 +595,7 @@ class _layerParamState extends State<layerParam> {
                   number *= 1000;
                   print(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))));
                   setState(() {
-                    finalAnswer =  '${P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08))))} Pa';
+                    finalAnswer =  '${P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08))))} Pa or ${(P_53000_Pa * (pow((1 + ((-0.0045)*(number-53000) / 282.66) ),g_met/(-0.0045*(287.08)))))/101325} atm';
                   });
 
                 } else if (required == d){
@@ -643,7 +626,7 @@ class _layerParamState extends State<layerParam> {
                   print('${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa or ${P_36080_psi * (pow(e, ((g_imp / (R_imp * T_36080)) * (number - 36080))))} psi');
 
                   setState(() {
-                    finalAnswer =  '${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa ';
+                    finalAnswer =  '${P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000))))} Pa or ${(P_79000_Pa * (pow(e, ((g_met / (287.08 * 165.66)) * (number - 79000)))))/101325} atm';
                   });
 
                 } else if (required == d){
@@ -671,7 +654,7 @@ class _layerParamState extends State<layerParam> {
                   print(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))));
 
                   setState(() {
-                    finalAnswer =  '${P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08))))} Pa ';
+                    finalAnswer =  '${P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08))))} Pa or ${(P_90000_Pa * (pow((1 + ((0.004)*(number-90000) / 165.66) ), g_met/(0.004*(287.08)))))/101325} atm';
                   });
 
                 } else if (required == d){
