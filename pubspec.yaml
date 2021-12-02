@@ -33,7 +33,7 @@ dependencies:
   page_transition:
   custom_splash: ^0.0.2
   flutter_advanced_drawer:
-  ffi:
+  ffi: ^1.0.0
 
 dev_dependencies:
   flutter_test:

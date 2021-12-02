@@ -124,8 +124,8 @@ class _RatioState extends State<Ratio> {
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
-              offset: Offset(-1, 2),
-              blurRadius: 1,
+              offset: Offset(-1, 1),
+              blurRadius: 2,
             ),
           ],
         ),
@@ -172,7 +172,7 @@ class _RatioState extends State<Ratio> {
   Widget _radioButton(String value, Color color, int index){
     return Expanded(
       child: Container(
-        height: 50.0,
+        height: 60.0,
         child: FlatButton(
           // change color button if its selected or not
           color: currentIndex == index ? color : Colors.grey[200],
@@ -197,7 +197,7 @@ class _RatioState extends State<Ratio> {
           },
           child: Text(value, style: TextStyle(
             color: currentIndex == index ? Colors.white : Colors.blueGrey,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold, fontSize: 18
 
           ),),
         ),
@@ -245,14 +245,15 @@ class _RatioState extends State<Ratio> {
 
   Widget _calculate() {
     return Container(
-      height: 50,
+      height: 60,
       width: MediaQuery.of(context).size.width-30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: getColorHex('#3dabde'),
+        color: getColorHex('#fa7b20'),
       ),
       child: FlatButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (!_formula1Form.currentState.validate()) {
             return;
           } else {
@@ -684,10 +685,10 @@ class _RatioState extends State<Ratio> {
         child: Text(
           "CALCULATE",
           style: TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 18 , fontWeight: FontWeight.bold),
         ),
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: getColorHex('#3dabde'), width: 3.0),
+          side: BorderSide(color: getColorHex('#fa7b20'), width: 3.0),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
@@ -702,10 +703,11 @@ class _RatioState extends State<Ratio> {
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           titleSpacing: 0,
-          elevation: 0.0,
-          backgroundColor: getColorHex("#31a9dd"),
+          elevation: 3.0,
+          backgroundColor: Colors.white,
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -716,7 +718,8 @@ class _RatioState extends State<Ratio> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
-                    size: 25,
+                    size: 30,
+                    color: Colors.blue,
                   ),
                 );
               },
@@ -734,7 +737,7 @@ class _RatioState extends State<Ratio> {
                 ),
               ),
               child: Image.asset(
-                'assets/logo5.png',
+                'assets/logo16.png',
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -743,103 +746,106 @@ class _RatioState extends State<Ratio> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/mobile52opac.png"),
+                image: AssetImage("assets/bg2.png"),
                 fit: BoxFit.cover,
               )),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
+                margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, bottom: 10.0),
                 height: MediaQuery.of(context).size.height/11,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: getColorHex("#31a9dd"),
                   borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
                   ),
                 ),
-                child:   Text("Ratio",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                child: Center(
+                  child: Text("Ratio",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                ),
               ),
               Expanded(
                 child: Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Form(
-                              key: _formula1Form,
-                              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                                _requiredTextField(),
-                                SizedBox(
-                                  height: 10,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      finalAnswer != null ?
+                      Container(
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                          width: MediaQuery.of(context).size.width-30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(-1, 1),
+                                blurRadius: 3,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Answer", style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold),
+                                  maxLines:5),
+                              SizedBox(height: 10.0,),
+                              Text(finalAnswer, style: TextStyle(color: Colors.black, fontSize: 18,)),
+                            ],
+                          )) : Container(),
+                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Form(
+                            key: _formula1Form,
+                            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                              _requiredTextField(),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width-30,
+                                child: Row(
+                                  children: [
+                                    Expanded(child: _number()),
+                                    SizedBox(width: 5.0,),
+                                    Visibility(
+                                        visible: metricSelected,
+                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                    Visibility(
+                                        visible: imperialSelected,
+                                        child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                                  ],
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width-30,
-                                  child: Row(
-                                    children: [
-                                      Expanded(child: _number()),
-                                      SizedBox(width: 5.0,),
-                                      Visibility(
-                                          visible: metricSelected,
-                                          child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
-                                      Visibility(
-                                          visible: imperialSelected,
-                                          child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
-                                    ],
-                                  ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width-30,
+                                child: Row(
+                                  children: [
+                                    _radioButton('Metric',  getColorHex('#3dabde'), 0),
+                                    SizedBox(width: 10.0,),
+                                    _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width-30,
-                                  child: Row(
-                                    children: [
-                                      _radioButton('Metric',  getColorHex('#3dabde'), 0),
-                                      SizedBox(width: 10.0,),
-                                      _radioButton('Imperial',  getColorHex('#3dabde'), 1),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                _calculate(),
-                                SizedBox(height: 20.0),
-                                finalAnswer != null ?
-                                Container(
-                                    padding: EdgeInsets.all(15),
-                                    width: MediaQuery.of(context).size.width-30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          offset: Offset(-1, 2),
-                                          blurRadius: 1,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-                                            maxLines:5),
-                                        SizedBox(height: 5.0,),
-                                        Text(finalAnswer),
-                                      ],
-                                    )) : Container(),
-                              ]),
-                            )),
-                      ],
-                    ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              _calculate(),
+                            ]),
+                          )),
+                    ],
                   ),
                 ),
               ),

@@ -5,6 +5,7 @@ import 'dart:math';
 
 bool imperialSelected, metricSelected;
 List <String>subType = [];
+int currentIndex = 0;
 final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 String dropdownValue = 'Choose Altitude';
 String dropdownValue2 = 'Choose';
@@ -48,8 +49,8 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
-                offset: Offset(-1, 2),
-                blurRadius: 1,
+                offset: Offset(-1, 1),
+                blurRadius: 2,
               ),
             ],
           ),
@@ -86,7 +87,6 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
 
 class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
-  int currentIndex = 0;
   String selectedType;
 
   void changeIndex (int index){
@@ -99,10 +99,17 @@ class _AltitudeState extends State<Altitude> {
   @override
   void initState() {
     super.initState();
-    finalAnswer = null;
-    subType.clear();
-    imperialSelected = false;
-    metricSelected = true;
+    setState(() {
+      currentIndex = 0;
+      finalAnswer = null;
+      subType.clear();
+      imperialSelected = false;
+      metricSelected = true;
+
+      dropdownValue2 = "--";
+      dropdownValue = "Choose Altitude";
+      requiredSubType =  "--";
+    });
   }
 
   Widget _requiredTextField() {
@@ -116,8 +123,8 @@ class _AltitudeState extends State<Altitude> {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
-                offset: Offset(-1, 2),
-                blurRadius: 1,
+                offset: Offset(-1, 1),
+                blurRadius: 2,
               ),
             ],
           ),
@@ -235,7 +242,7 @@ class _AltitudeState extends State<Altitude> {
   Widget _radioButton(String value, Color color, int index, String type){
     return Expanded(
       child: Container(
-        height: 50.0,
+        height: 60.0,
         child: FlatButton(
           // change color button if its selected or not
           color: currentIndex == index ? color : Colors.grey[200],
@@ -310,6 +317,7 @@ class _AltitudeState extends State<Altitude> {
           child: Text(value, style: TextStyle(
             color: currentIndex == index ? Colors.white : Colors.blueGrey,
             fontWeight: FontWeight.bold,
+            fontSize: 18
 
           ),),
         ),
@@ -517,257 +525,148 @@ class _AltitudeState extends State<Altitude> {
 
   Widget _calculate() {
     return Container(
-      height: 50,
+      height: 60,
       width: MediaQuery.of(context).size.width-30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: getColorHex('#3dabde'),
+        color: getColorHex('#fa7b20'),
       ),
       child: FlatButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (!_formula1Form.currentState.validate()) {
             return;
           } else {
-
             _formula1Form.currentState.save();
-
             print(required);
             print(requiredSubType);
             print(number.toString());
-
-
             // METRIC
             if (currentIndex == 0) {
-
               if (required == p){
-
                 if (requiredSubType == 'Pascal'){
-
                   if (number>=22625.0221 && number<=101325){
-
                     _metPressurePascalGradientLayer(288.16, number, 101325, -0.0065, 0);
-
                   } else if (number>=2486.742462 && number<22625.0221){
-
                     _metPressurePascalIsothermalLayer(216.66, number, 22625.0221, 11000);
-
                   } else if (number>=120.27788 && number<2486.742462){
-
                     _metPressurePascalGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
-
                   } else if (number>=58.23262684 && number<120.27788){
-
                     _metPressurePascalIsothermalLayer(282.66, number, 120.27788, 47000);
-
                   } else if (number>=1.007100672 && number<58.23262684){
-
                     _metPressurePascalGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
-
                   } else if (number>=0.1041462713 && number<1.007100672){
-
                     _metPressurePascalIsothermalLayer(165.66, number, 1.007100672, 79000);
-
                   } else if (number>=0.007427951993 && number<0.1041462713){
-
                     _metPressurePascalGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
-
                   }
+                }
 
-
-                } else if (requiredSubType == 'atm'){
-
+                else if (requiredSubType == 'atm'){
                   if (number>=22625.0221 && number<=101325){
-
                     _metPressureAtmGradientLayer(288.16, number, 101325, -0.0065, 0);
-
                   } else if (number>=2486.742462 && number<22625.0221){
-
                     _metPressureAtmIsothermalLayer(216.66, number, 22625.0221, 11000);
-
                   } else if (number>=120.27788 && number<2486.742462){
-
                     _metPressureAtmGradientLayer(216.66, number, 2486.742462, 0.003, 25000);
-
                   } else if (number>=58.23262684 && number<120.27788){
-
                     _metPressureAtmIsothermalLayer(282.66, number, 120.27788, 47000);
-
                   } else if (number>=1.007100672 && number<58.23262684){
-
                     _metPressureAtmGradientLayer(282.66, number, 58.23262684, -0.0045, 53000);
-
                   } else if (number>=0.1041462713 && number<1.007100672){
-
                     _metPressureAtmIsothermalLayer(165.66, number, 1.007100672, 79000);
-
                   } else if (number>=0.007427951993 && number<0.1041462713){
-
                     _metPressureAtmGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
-
                   }
-
                 }
-
-
-              } else if (required == d) {
-
+              }
+              else if (required == d) {
                 if (number>=0.3638006285 && number<=1.225){
-
                   _metDensityGradientLayer(288.16, number, 1.225,-0.0065 , 0);
-
                 } else if (number>=0.0399857497 && number<0.3638006285){
-
                   _metDensityIsothermalLayer( 216.66, number, 0.3638006285, 11000 );
-
                 } else if (number>=0.001482431319 && number<0.0399857497){
-
                   _metDensityGradientLayer(216.66, number, 0.0399857497,0.003 , 25000);
-
                 } else if (number>=0.0007177202478 && number<0.001482431319) {
-
                   _metDensityIsothermalLayer( 282.66, number, 0.001482431319, 47000 );
-
                 } else if (number>=0.00002117914386 && number<0.0007177202478) {
-
                   _metDensityGradientLayer(282.66, number, 0.0007177202478, -0.0045 , 53000);
-
                 } else if (number>=0.000002190177134 && number<0.00002117914386) {
-
                   _metDensityIsothermalLayer( 165.66, number, 0.00002117914386, 79000 );
-
                 } else if (number>=0.0000001146747168 && number<0.000002190177134) {
-
                   _metDensityGradientLayer(165.66, number, 0.000002190177134, 0.004 , 90000);
-
                 }
-
               }
 
 
               // IMPERIAL
             } else if (currentIndex == 1) {
-
               if (required == p){
-
                 if (requiredSubType == 'psf'){
-
                   if (number>=473.3159716 && number<=2116.8){
-
                     _impPressurePsfGradientLayer(519, number, 2116.8, -0.003566, 0);
-
                   } else if (number>=52.14640142 && number<473.3159716){
-
                     _impPressurePsfIsothermalLayer(390.33872, number, 473.3159716, 36080);
-
                   } else if (number>=2.529589985 && number<52.14640142){
-
                     _impPressurePsfGradientLayer(390.33872, number, 52.14640142, 0.001646341463, 82000);
-
                   } else if (number>=1.225472385 && number<2.52958995){
-
                     _impPressurePsfIsothermalLayer(509.13872, number, 2.52958995, 154160);
-
                   } else if (number>=0.02128756766 && number<1.225472385){
-
                     _impPressurePsfGradientLayer(509.13872, number, 1.225472385, -0.002469512195, 173840);
-
                   } else if (number>=0.002208151928 && number<0.02128756766){
-
                     _impPressurePsfIsothermalLayer(298.53872, number, 0.02128756766, 259120);
-
                   } else if (number>=0.0001579851922 && number<0.002208151928){
-
                     _impPressurePsfGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
-
                   }
-
-
-                } else if (requiredSubType == 'psi'){
-
-                  if (number>=22625.0221 && number<=101325){
-
-                    _impPressurePsiGradientLayer(519, number, 2116.8, -0.003566, 0);
-
-                  } else if (number>=2486.742462 && number<22625.0221){
-
-                    _impPressurePsiIsothermalLayer(390.33872, number, 473.3159716, 36080);
-
-                  } else if (number>=2.529589985 && number<52.14640142){
-
-                    _impPressurePsiGradientLayer(390.33872, number, 52.14640142, 0.001646341463, 82000);
-
-                  } else if (number>=1.225472385 && number<2.52958995){
-
-                    _impPressurePsiIsothermalLayer(509.13872, number, 2.52958995, 154160);
-
-                  } else if (number>=0.02128756766 && number<1.225472385){
-
-                    _impPressurePsiGradientLayer(509.13872, number, 1.225472385, -0.002469512195, 173840);
-
-                  } else if (number>=0.002208151928 && number<0.02128756766){
-
-                    _impPressurePsiIsothermalLayer(298.53872, number, 0.02128756766, 259120);
-
-                  } else if (number>=0.0001579851922 && number<0.002208151928){
-
-                    _impPressurePsiGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
-
-                  }
-
                 }
 
-
-              } else if (required == d) {
-
-                if (number>=0.0007066855948 && number<=0.002377){
-
-                  _impDensityGradientLayer(519, number, 0.002377,-0.003566 , 0);
-
-                } else if (number>=0.00007785731502 && number<0.0007066855948){
-
-                  _impDensityIsothermalLayer( 390.33872, number, 0.0007066855948, 36080 );
-
-                } else if (number>=0.000002895547672 && number<0.00007785731502){ // check number condition
-
-                  _impDensityGradientLayer(390.33872, number, 0.00007785731502, 0.001646341463 , 82000);
-
-                } else if (number>=0.000001402762397 && number<0.000002895547672) {
-
-                  _impDensityIsothermalLayer( 509.13872, number, 0.000002895547672, 154160 );
-
-                } else if (number>=0.00000004155679898 && number<0.000001402762397) {
-
-                  _impDensityGradientLayer(509.13872, number, 0.000001402762397, -0.002469512195 , 173840);
-
-                } else if (number>=0.000000004310672185 && number<0.00000004155679898) {
-
-                  _impDensityIsothermalLayer( 298.53872, number, 0.00000004155679898, 259120 );
-
-                } else if (number>=0.0000000002264806903 && number<0.000000004310672185) {
-
-                  _impDensityGradientLayer( 298.53872, number, 0.000000004310672185, 0.002195121951 , 295200);
-
+                else if (requiredSubType == 'psi'){
+                  if (number>=22625.0221 && number<=101325){
+                    _impPressurePsiGradientLayer(519, number, 2116.8, -0.003566, 0);
+                  } else if (number>=2486.742462 && number<22625.0221){
+                    _impPressurePsiIsothermalLayer(390.33872, number, 473.3159716, 36080);
+                  } else if (number>=2.529589985 && number<52.14640142){
+                    _impPressurePsiGradientLayer(390.33872, number, 52.14640142, 0.001646341463, 82000);
+                  } else if (number>=1.225472385 && number<2.52958995){
+                    _impPressurePsiIsothermalLayer(509.13872, number, 2.52958995, 154160);
+                  } else if (number>=0.02128756766 && number<1.225472385){
+                    _impPressurePsiGradientLayer(509.13872, number, 1.225472385, -0.002469512195, 173840);
+                  } else if (number>=0.002208151928 && number<0.02128756766){
+                    _impPressurePsiIsothermalLayer(298.53872, number, 0.02128756766, 259120);
+                  } else if (number>=0.0001579851922 && number<0.002208151928){
+                    _impPressurePsiGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
+                  }
                 }
 
               }
 
-
+              else if (required == d) {
+                if (number>=0.0007066855948 && number<=0.002377){
+                  _impDensityGradientLayer(519, number, 0.002377,-0.003566 , 0);
+                } else if (number>=0.00007785731502 && number<0.0007066855948){
+                  _impDensityIsothermalLayer( 390.33872, number, 0.0007066855948, 36080 );
+                } else if (number>=0.000002895547672 && number<0.00007785731502){ // check number condition
+                  _impDensityGradientLayer(390.33872, number, 0.00007785731502, 0.001646341463 , 82000);
+                } else if (number>=0.000001402762397 && number<0.000002895547672) {
+                  _impDensityIsothermalLayer( 509.13872, number, 0.000002895547672, 154160 );
+                } else if (number>=0.00000004155679898 && number<0.000001402762397) {
+                  _impDensityGradientLayer(509.13872, number, 0.000001402762397, -0.002469512195 , 173840);
+                } else if (number>=0.000000004310672185 && number<0.00000004155679898) {
+                  _impDensityIsothermalLayer( 298.53872, number, 0.00000004155679898, 259120 );
+                } else if (number>=0.0000000002264806903 && number<0.000000004310672185) {
+                  _impDensityGradientLayer( 298.53872, number, 0.000000004310672185, 0.002195121951 , 295200);
+                }
+              }
             }
-
-
-
-
-
-
           }
         },
         child: Text(
           "CALCULATE",
           style: TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: getColorHex('#3dabde'), width: 3.0),
+          side: BorderSide(color: getColorHex('#fa7b20'), width: 3.0),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
@@ -784,8 +683,8 @@ class _AltitudeState extends State<Altitude> {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
-          elevation: 0.0,
-          backgroundColor: getColorHex("#31a9dd"),
+          elevation: 3.0,
+          backgroundColor: Colors.white,
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -796,7 +695,8 @@ class _AltitudeState extends State<Altitude> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
-                    size: 25,
+                    size: 30,
+                    color: Colors.blue,
                   ),
                 );
               },
@@ -814,7 +714,7 @@ class _AltitudeState extends State<Altitude> {
                 ),
               ),
               child: Image.asset(
-                'assets/logo5.png',
+                'assets/logo16.png',
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -823,7 +723,7 @@ class _AltitudeState extends State<Altitude> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/mobile52opac.png"),
+                image: AssetImage("assets/bg2.png"),
                 fit: BoxFit.cover,
               )),
           child: Form(
@@ -831,34 +731,63 @@ class _AltitudeState extends State<Altitude> {
             child: Column(
               children: [
                 Container(
+                  margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, bottom: 10.0),
                   height: MediaQuery.of(context).size.height/11,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: getColorHex("#31a9dd"),
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
                     ),
                   ),
-                  child:   Text("Altitude",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                  child:  Center(
+                    child: Text("Altitude",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white)),
+                  ),
                 ),
                 Expanded(
-                  child: Container(
-                    child: Center(
-                      child: Column(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      child:  Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          finalAnswer != null ?
+                          Container(
+                              margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                              padding: EdgeInsets.all(15),
+                              width: MediaQuery.of(context).size.width-30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    offset: Offset(-1, 1),
+                                    blurRadius: 3,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Answer", style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold),
+                                      maxLines:5),
+                                  SizedBox(height: 10.0,),
+                                  Text(finalAnswer, style: TextStyle(color: Colors.black, fontSize: 18,)),
+                                ],
+                              )) : Container(),
                           Row(
                             children: [
                               _requiredTextField(),
                               subTypeDropDown(),
                             ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          SizedBox(height: 20,),
                           Container(
                             width: MediaQuery.of(context).size.width-30,
                             child: Row(
@@ -869,34 +798,11 @@ class _AltitudeState extends State<Altitude> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 10,),
                           _number(),
+                          SizedBox(height: 10,),
                           _calculate(),
                           SizedBox(height:15),
-                          finalAnswer != null ?
-                          Container(
-                              padding: EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width-30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    offset: Offset(-1, 2),
-                                    blurRadius: 1,
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Answer", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-                                      maxLines:5),
-                                  SizedBox(height: 5.0,),
-                                  Text(finalAnswer),
-                                ],
-                              )) : Container(),
                         ],
                       ),
                     ),
