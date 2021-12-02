@@ -1,4 +1,5 @@
 import 'package:aerocal/side_drawer.dart';
+import 'package:aerocal/toastMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
@@ -119,15 +120,15 @@ class _RatioState extends State<Ratio> {
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width-30,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white,
-              offset: Offset(-1, 1),
-              blurRadius: 2,
-            ),
-          ],
+//          boxShadow: [
+//            BoxShadow(
+//              color: Colors.white,
+//              offset: Offset(-1, 1),
+//              blurRadius: 2,
+//            ),
+//          ],
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -469,7 +470,14 @@ class _RatioState extends State<Ratio> {
                 }
 
 
+              } else {
+
+                finalAnswer = null;
+                print('Exceeded maximum computable altitude');
+                showToastMessage("Exceeded maximum computable altitude");
+
               }
+
             }
             // METRIC
 
@@ -676,6 +684,12 @@ class _RatioState extends State<Ratio> {
 
                 }
 
+              } else {
+
+                finalAnswer = null;
+                print('Exceeded maximum computable altitude');
+                showToastMessage("Exceeded maximum computable altitude");
+
               }
             }
 
@@ -719,7 +733,7 @@ class _RatioState extends State<Ratio> {
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
                     size: 30,
-                    color: Colors.blue,
+                    color: getColorHex('#155174'),
                   ),
                 );
               },
@@ -746,12 +760,13 @@ class _RatioState extends State<Ratio> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/mobile85opac2.png"),
+                image: AssetImage("assets/bg4.png"),
                 fit: BoxFit.cover,
               )),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              SizedBox(height:30),
               Container(
                 margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0,),
                 height: MediaQuery.of(context).size.height/11,
@@ -771,19 +786,21 @@ class _RatioState extends State<Ratio> {
                       style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,    letterSpacing: 2)),
                 ),
               ),
+              SizedBox(height:45),
               Expanded(
                 child: Container(
+                  margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       finalAnswer != null ?
                       Container(
                           padding: EdgeInsets.all(15),
-                          margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                          margin: EdgeInsets.only(bottom: 40.0),
                           width: MediaQuery.of(context).size.width-30,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
+                            color: getColorHex('#155174'),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.white,
@@ -793,13 +810,11 @@ class _RatioState extends State<Ratio> {
                             ],
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Answer", style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold),
+                              Text("Answer", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                   maxLines:5),
                               SizedBox(height: 10.0,),
-                              Text(finalAnswer, style: TextStyle(color: Colors.black, fontSize: 18,)),
+                              Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                             ],
                           )) : Container(),
                       Container(
@@ -815,14 +830,9 @@ class _RatioState extends State<Ratio> {
                                 width: MediaQuery.of(context).size.width-30,
                                 child: Row(
                                   children: [
-                                    Expanded(child: _number()),
-                                    SizedBox(width: 5.0,),
-                                    Visibility(
-                                        visible: metricSelected,
-                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
-                                    Visibility(
-                                        visible: imperialSelected,
-                                        child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
+                                    _radioButton('Metric',  getColorHex('#155174'), 0),
+                                    SizedBox(width: 10.0,),
+                                    _radioButton('Imperial',  getColorHex('#155174'), 1),
                                   ],
                                 ),
                               ),
@@ -833,14 +843,20 @@ class _RatioState extends State<Ratio> {
                                 width: MediaQuery.of(context).size.width-30,
                                 child: Row(
                                   children: [
-                                    _radioButton('Metric',  getColorHex('#3dabde'), 0),
-                                    SizedBox(width: 10.0,),
-                                    _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                                    Expanded(child: _number()),
+                                    SizedBox(width: 5.0,),
+                                    Visibility(
+                                        visible: metricSelected,
+                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
+                                    Visibility(
+                                        visible: imperialSelected,
+                                        child: Text("ft", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
                                   ],
                                 ),
                               ),
+
                               SizedBox(
-                                height: 20,
+                                height: 40,
                               ),
                               _calculate(),
                             ]),

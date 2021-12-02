@@ -28,14 +28,15 @@ class _SideBarState extends State<SideBar> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
+                height: MediaQuery.of(context).size.height / 5.5,
                 margin: const EdgeInsets.only(
-                  top: 24.0,
-                  left: 25,
-                  right: 25
+                  top: 30.0,
+                  left: 30,
+                  right: 30
                 ),
                 child: Image.asset(
                   'assets/logo16.png',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               Container(
@@ -44,7 +45,7 @@ class _SideBarState extends State<SideBar> {
                   child:  Text("AerodynamicX",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
-
+              SizedBox(height:35),
               Container(
                 padding: EdgeInsets.all(15.0),
                 margin: EdgeInsets.only(left: 10.0, right: 10.0),

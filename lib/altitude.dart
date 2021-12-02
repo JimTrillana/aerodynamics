@@ -1,4 +1,5 @@
 import 'package:aerocal/side_drawer.dart';
+import 'package:aerocal/toastMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
@@ -41,18 +42,18 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-          margin: EdgeInsets.only(top: 15.0, left: 5.0, right: 10.0),
+          margin: EdgeInsets.only(top: 15.0, left: 5.0, ),
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white,
-                offset: Offset(-1, 1),
-                blurRadius: 2,
-              ),
-            ],
+//            boxShadow: [
+//              BoxShadow(
+//                color: Colors.white,
+//                offset: Offset(-1, 1),
+//                blurRadius: 2,
+//              ),
+//            ],
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
@@ -115,18 +116,18 @@ class _AltitudeState extends State<Altitude> {
   Widget _requiredTextField() {
     return Expanded(
       child: Container(
-          margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 5.0),
+          margin: EdgeInsets.only(top: 15.0, right: 5.0),
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white,
-                offset: Offset(-1, 1),
-                blurRadius: 2,
-              ),
-            ],
+//            boxShadow: [
+//              BoxShadow(
+//                color: Colors.white,
+//                offset: Offset(-1, 1),
+//                blurRadius: 2,
+//              ),
+//            ],
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
@@ -327,8 +328,7 @@ class _AltitudeState extends State<Altitude> {
 
   Widget _number() {
     return Container(
-      margin: EdgeInsets.all(10.0),
-      width: MediaQuery.of(context).size.width-30,
+//      margin: EdgeInsets.all(10.0),
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -559,6 +559,10 @@ class _AltitudeState extends State<Altitude> {
                     _metPressurePascalIsothermalLayer(165.66, number, 1.007100672, 79000);
                   } else if (number>=0.007427951993 && number<0.1041462713){
                     _metPressurePascalGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+                  } else {
+                    finalAnswer = null;
+                    print('Exceeded maximum computable pressure altitude');
+                    showToastMessage("Exceeded maximum computable pressure altitude");
                   }
                 }
 
@@ -577,6 +581,10 @@ class _AltitudeState extends State<Altitude> {
                     _metPressureAtmIsothermalLayer(165.66, number, 1.007100672, 79000);
                   } else if (number>=0.007427951993 && number<0.1041462713){
                     _metPressureAtmGradientLayer(165.66, number, 0.1041462713, 0.004, 90000);
+                  } else {
+                    finalAnswer = null;
+                    print('Exceeded maximum computable pressure altitude');
+                    showToastMessage("Exceeded maximum computable pressure altitude");
                   }
                 }
               }
@@ -595,6 +603,10 @@ class _AltitudeState extends State<Altitude> {
                   _metDensityIsothermalLayer( 165.66, number, 0.00002117914386, 79000 );
                 } else if (number>=0.0000001146747168 && number<0.000002190177134) {
                   _metDensityGradientLayer(165.66, number, 0.000002190177134, 0.004 , 90000);
+                } else {
+                  finalAnswer = null;
+                  print('Exceeded maximum computable density altitude');
+                  showToastMessage("Exceeded maximum computable density altitude");
                 }
               }
 
@@ -617,6 +629,10 @@ class _AltitudeState extends State<Altitude> {
                     _impPressurePsfIsothermalLayer(298.53872, number, 0.02128756766, 259120);
                   } else if (number>=0.0001579851922 && number<0.002208151928){
                     _impPressurePsfGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
+                  } else {
+                    finalAnswer = null;
+                    print('Exceeded maximum computable pressure altitude');
+                    showToastMessage("Exceeded maximum computable pressure altitude");
                   }
                 }
 
@@ -635,6 +651,10 @@ class _AltitudeState extends State<Altitude> {
                     _impPressurePsiIsothermalLayer(298.53872, number, 0.02128756766, 259120);
                   } else if (number>=0.0001579851922 && number<0.002208151928){
                     _impPressurePsiGradientLayer(298.53872, number, 0.002208151928, 0.002195121951, 295200);
+                  } else {
+                    finalAnswer = null;
+                    print('Exceeded maximum computable pressure altitude');
+                    showToastMessage("Exceeded maximum computable pressure altitude");
                   }
                 }
 
@@ -655,6 +675,10 @@ class _AltitudeState extends State<Altitude> {
                   _impDensityIsothermalLayer( 298.53872, number, 0.00000004155679898, 259120 );
                 } else if (number>=0.0000000002264806903 && number<0.000000004310672185) {
                   _impDensityGradientLayer( 298.53872, number, 0.000000004310672185, 0.002195121951 , 295200);
+                }  else {
+                  finalAnswer = null;
+                  print('Exceeded maximum computable density altitude');
+                  showToastMessage("Exceeded maximum computable density altitude");
                 }
               }
             }
@@ -696,7 +720,7 @@ class _AltitudeState extends State<Altitude> {
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
                     size: 30,
-                    color: Colors.blue,
+                    color: getColorHex('#155174'),
                   ),
                 );
               },
@@ -723,13 +747,14 @@ class _AltitudeState extends State<Altitude> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/mobile85opac2.png"),
+                image: AssetImage("assets/bg4.png"),
                 fit: BoxFit.cover,
               )),
           child: Form(
             key: _formula1Form,
             child: Column(
               children: [
+                SizedBox(height:30),
                 Container(
                   margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0, ),
                   height: MediaQuery.of(context).size.height/11,
@@ -749,20 +774,22 @@ class _AltitudeState extends State<Altitude> {
                         style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,  letterSpacing: 2)),
                   ),
                 ),
+                SizedBox(height:35),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
+                      margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
                       child:  Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           finalAnswer != null ?
                           Container(
-                              margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                              margin: EdgeInsets.only(top: 10.0, bottom: 40.0),
                               padding: EdgeInsets.all(15),
                               width: MediaQuery.of(context).size.width-30,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
+                                color: getColorHex('#155174'),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.white,
@@ -772,13 +799,11 @@ class _AltitudeState extends State<Altitude> {
                                 ],
                               ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Answer", style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold),
+                                  Text("Answer", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                       maxLines:5),
                                   SizedBox(height: 10.0,),
-                                  Text(finalAnswer, style: TextStyle(color: Colors.black, fontSize: 18,)),
+                                  Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                                 ],
                               )) : Container(),
                           Row(
@@ -792,15 +817,15 @@ class _AltitudeState extends State<Altitude> {
                             width: MediaQuery.of(context).size.width-30,
                             child: Row(
                               children: [
-                                _radioButton('Metric',  getColorHex('#3dabde'), 0, selectedType),
+                                _radioButton('Metric',  getColorHex('#155174'), 0, selectedType),
                                 SizedBox(width: 10.0,),
-                                _radioButton('Imperial',  getColorHex('#3dabde'), 1, selectedType),
+                                _radioButton('Imperial',  getColorHex('#155174'), 1, selectedType),
                               ],
                             ),
                           ),
                           SizedBox(height: 10,),
                           _number(),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 40,),
                           _calculate(),
                           SizedBox(height:15),
                         ],

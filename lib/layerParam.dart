@@ -1,7 +1,9 @@
 import 'package:aerocal/side_drawer.dart';
+import 'package:aerocal/toastMessage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 bool imperialSelected, metricSelected;
 
@@ -121,15 +123,15 @@ class _layerParamState extends State<layerParam> {
         padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width-30,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white,
-              offset: Offset(-1, 1),
-              blurRadius: 3,
-            ),
-          ],
+//          boxShadow: [
+//            BoxShadow(
+//              color: Colors.white,
+//              offset: Offset(-1, 1),
+//              blurRadius: 3,
+//            ),
+//          ],
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -173,7 +175,7 @@ class _layerParamState extends State<layerParam> {
   Widget _radioButton(String value, Color color, int index){
     return Expanded(
       child: Container(
-        height: 60.0,
+        height: 57.0,
         child: FlatButton(
           // change color button if its selected or not
           color: currentIndex == index ? color : Colors.grey[200],
@@ -224,11 +226,11 @@ class _layerParamState extends State<layerParam> {
 //            prefixIcon: Icon(Icons.lock),
           fillColor: Colors.white,
           filled: true,
-          labelText: "Enter number",
+          labelText: "Enter altitude",
         ),
         validator: (String val) {
           if (val.isEmpty) {
-            return "Number is required";
+            return "Altitude is required";
           }
 //          else if (int.parse(val) > 105){
 //            return "Exceeded maximum number of km (105km)";
@@ -469,6 +471,12 @@ class _layerParamState extends State<layerParam> {
                   });
                 }
 
+              } else {
+
+                finalAnswer = null;
+                print('Exceeded maximum computable altitude');
+                showToastMessage("Exceeded maximum computable altitude");
+
               }
             }
 
@@ -676,7 +684,15 @@ class _layerParamState extends State<layerParam> {
 
                 }
 
+              } else {
+
+                finalAnswer = null;
+                print('Exceeded maximum computable altitude');
+                showToastMessage("Exceeded maximum computable altitude");
+
+
               }
+
             }
           }
         },
@@ -715,7 +731,7 @@ class _layerParamState extends State<layerParam> {
                   child: Icon(
                     value.visible ? Icons.clear : Icons.menu,
                     key: ValueKey<bool>(value.visible),
-                    color: Colors.blue,
+                    color: getColorHex('#155174'),
                     size: 30,
                   ),
                 );
@@ -743,11 +759,12 @@ class _layerParamState extends State<layerParam> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/mobile85opac2.png"),
+                image: AssetImage("assets/bg4.png"),
                 fit: BoxFit.cover,
               )),
           child: Column(
             children: [
+              SizedBox(height:30),
               Container(
                 margin: EdgeInsets.only(top: 15, left: 10.0, right: 10.0,),
                 height: MediaQuery.of(context).size.height/11,
@@ -767,19 +784,21 @@ class _layerParamState extends State<layerParam> {
                         style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white,  letterSpacing: 2)),
                   ),
               ),
+              SizedBox(height:45),
               Expanded(
                 child: Container(
+                  margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       finalAnswer != null ?
                       Container(
-                          margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                          margin: EdgeInsets.only(bottom: 40.0),
                           padding: EdgeInsets.all(15),
                           width: MediaQuery.of(context).size.width-30,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
+                            color: getColorHex('#155174'),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.white,
@@ -789,13 +808,13 @@ class _layerParamState extends State<layerParam> {
                             ],
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+//                            mainAxisAlignment: MainAxisAlignment.start,
+//                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Answer", style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold),
+                              Text("Answer", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                   maxLines:5),
                               SizedBox(height: 10.0,),
-                              Text(finalAnswer, style: TextStyle(color: Colors.black, fontSize: 18,)),
+                              Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                             ],
                           )) : Container(),
                       Container(
@@ -804,6 +823,17 @@ class _layerParamState extends State<layerParam> {
                             key: _formula1Form,
                             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                               _requiredTextField(),
+                              SizedBox( height: 20,),
+                              Container(
+                                width: MediaQuery.of(context).size.width-30,
+                                child: Row(
+                                  children: [
+                                    _radioButton('Metric',  getColorHex('#155174'), 0),
+                                    SizedBox(width: 10.0,),
+                                    _radioButton('Imperial',  getColorHex('#155174'), 1),
+                                  ],
+                                ),
+                              ),
                               SizedBox(
                                 height: 20,
                               ),
@@ -815,26 +845,15 @@ class _layerParamState extends State<layerParam> {
                                     SizedBox(width: 5.0,),
                                     Visibility(
                                         visible: metricSelected,
-                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
+                                        child: Text("km", style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
                                     Visibility(
                                         visible: imperialSelected,
-                                        child: Text("ft",  style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white))),
-                                  ],
-                                ),
-                              ),
-                              SizedBox( height: 20,),
-                              Container(
-                                width: MediaQuery.of(context).size.width-30,
-                                child: Row(
-                                  children: [
-                                    _radioButton('Metric',  getColorHex('#3dabde'), 0),
-                                    SizedBox(width: 10.0,),
-                                    _radioButton('Imperial',  getColorHex('#3dabde'), 1),
+                                        child: Text("ft",  style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
                                   ],
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 40,
                               ),
                               _calculate(),
                               SizedBox(height: 20.0),

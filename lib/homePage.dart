@@ -45,9 +45,8 @@ class _homePageState extends State<homePage> {
                 children: [
                   Center(
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 3.8,
-                      margin: EdgeInsets.only(
-                          left: 30, right: 30, ),
+                      height: MediaQuery.of(context).size.height / 4.8,
+                      margin: EdgeInsets.only(left: 30, right: 30,),
                       child: Image.asset(
                         'assets/logo16.png',
                         fit: BoxFit.fitWidth,
@@ -55,11 +54,12 @@ class _homePageState extends State<homePage> {
                     ),
                   ),
                   Container(
+                      margin: EdgeInsets.only(bottom:70),
                       width: MediaQuery.of(context).size.width,
                       child:  Text("AerodynamicX",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 26, color: Colors.blueGrey))),
-                  SizedBox(height:120),
+                  SizedBox(height:140),
                   Container(
                     margin: EdgeInsets.only(top: 20.0),
                     width: MediaQuery.of(context).size.width-20,
@@ -201,6 +201,7 @@ class _homePageState extends State<homePage> {
                                 ]),
                           ),
                         ),
+                        SizedBox(height:10),
                       ],
                     ),
                   ),
