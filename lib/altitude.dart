@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'dart:math';
 
-bool imperialSelected, metricSelected;
+bool metricSelected;
 List <String>subType = [];
 int currentIndex = 0;
 final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
@@ -89,6 +89,7 @@ class _subTypeDropDownState extends State<subTypeDropDown> {
 class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
   String selectedType;
+  String selectedSubType = "";
 
   void changeIndex (int index){
     setState((){
@@ -104,8 +105,9 @@ class _AltitudeState extends State<Altitude> {
       currentIndex = 0;
       finalAnswer = null;
       subType.clear();
-      imperialSelected = false;
+
       metricSelected = true;
+      selectedSubType = "";
 
       dropdownValue2 = "--";
       dropdownValue = "Choose Altitude";
@@ -113,6 +115,51 @@ class _AltitudeState extends State<Altitude> {
     });
   }
 
+  Widget SubDropDown() {
+    return Expanded(
+      child: Container(
+          margin: EdgeInsets.only(top: 15.0, left: 5.0, ),
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+//            boxShadow: [
+//              BoxShadow(
+//                color: Colors.white,
+//                offset: Offset(-1, 1),
+//                blurRadius: 2,
+//              ),
+//            ],
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: dropdownValue2,
+              icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 24,
+              isExpanded: true,
+              elevation: 16,
+//          style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue2 = newValue;
+                  requiredSubType = newValue;
+                  selectedSubType = newValue;
+                });
+              },
+              items: subType.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          )),
+    );
+  }
   Widget _requiredTextField() {
     return Expanded(
       child: Container(
@@ -151,6 +198,7 @@ class _AltitudeState extends State<Altitude> {
                     print(subType);
                     dropdownValue2 = "--";
                     selectedType = "Choose Altitude";
+                    selectedSubType = "";
                   });
                 }
                 if(newValue == "Pressure Altitude"){
@@ -161,6 +209,7 @@ class _AltitudeState extends State<Altitude> {
                     print(subType);
                     dropdownValue2 = "--";
                     selectedType = "Pressure Altitude";
+                    selectedSubType = "Pascal";
                   });
                 }
                 if(newValue == "Density Altitude"){
@@ -171,6 +220,7 @@ class _AltitudeState extends State<Altitude> {
                     print(subType);
                     dropdownValue2 = "--";
                     selectedType = "Density Altitude";
+                    selectedSubType = "kgm3";
                   });
                 }
 
@@ -269,6 +319,7 @@ class _AltitudeState extends State<Altitude> {
                 dropdownValue2 = "Pascal";
                 requiredSubType = "Pascal";
                 required = type;
+                selectedSubType = "Pascal";
               });
             }
             else if(type == "Pressure Altitude" && index == 1){
@@ -280,6 +331,7 @@ class _AltitudeState extends State<Altitude> {
                 dropdownValue2 = "psf";
                 requiredSubType = "psf";
                 required = type;
+                selectedSubType = "psf";
               });
             }
             else if(type == "Density Altitude"  && index == 0){
@@ -290,6 +342,7 @@ class _AltitudeState extends State<Altitude> {
                 requiredSubType = "kgm3";
                 print(subType);
                 required = type;
+                selectedSubType = "kgm3";
               });
             }
             else if(type == "Density Altitude"  && index == 1){
@@ -298,20 +351,9 @@ class _AltitudeState extends State<Altitude> {
                 subType.add("slugft3");
                 dropdownValue2 = "slugft3";
                 requiredSubType = "slugft3";
+                selectedSubType = "slugft3";
                 print(subType);
                 required = type;
-              });
-            }
-            if(index == 0){
-              setState(() {
-                imperialSelected = false;
-                metricSelected = true;
-              });
-            }
-            else if(index == 1){
-              setState(() {
-                imperialSelected = true;
-                metricSelected = false;
               });
             }
           },
@@ -809,7 +851,7 @@ class _AltitudeState extends State<Altitude> {
                           Row(
                             children: [
                               _requiredTextField(),
-                              subTypeDropDown(),
+                              SubDropDown(),
                             ],
                           ),
                           SizedBox(height: 20,),
@@ -824,7 +866,15 @@ class _AltitudeState extends State<Altitude> {
                             ),
                           ),
                           SizedBox(height: 10,),
-                          _number(),
+                          Row(
+                            children: [
+                              Expanded(child: _number()),
+                              SizedBox(width: 5.0,),
+                              Visibility(
+                                  visible: metricSelected,
+                                  child: Text(selectedSubType, style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
+                            ],
+                          ),
                           SizedBox(height: 40,),
                           _calculate(),
                           SizedBox(height:15),
