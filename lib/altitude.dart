@@ -55,6 +55,7 @@ class _AltitudeState extends State<Altitude> {
 
       metricSelected = true;
       selectedSubType = "";
+      selectedType = "Pressure Altitude";
 
       dropdownValue = "Pressure Altitude";
 
@@ -255,6 +256,9 @@ class _AltitudeState extends State<Altitude> {
             borderRadius: BorderRadius.circular(8.0),
           ),
           onPressed: (){
+
+            print(type);
+
             changeIndex(index);
             if(type == "Choose Altitude"){
               setState(() {
