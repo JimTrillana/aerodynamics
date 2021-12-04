@@ -327,21 +327,23 @@ class _AltitudeState extends State<Altitude> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
-          focusedBorder: new OutlineInputBorder(
-              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
+          border: UnderlineInputBorder(
+              borderRadius:BorderRadius.circular(10.0)),
+//          border: new OutlineInputBorder(
+//              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
+//          focusedBorder: new OutlineInputBorder(
+//              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
 //            enabledBorder: InputBorder.none,
           errorBorder: OutlineInputBorder(
               borderSide: new BorderSide(color: Colors.red,  width: 1.5)),
           disabledBorder: InputBorder.none,
           fillColor: Colors.white,
           filled: true,
-          labelText: "Enter number",
+          labelText: "Enter value",
         ),
         validator: (String val) {
           if (val.isEmpty) {
-            return "Number is required";
+            return "Please input altitude.";
           }
           return null;
         },

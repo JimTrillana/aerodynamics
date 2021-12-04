@@ -211,12 +211,15 @@ class _layerParamState extends State<layerParam> {
   Widget _number() {
     return Container(
       child: TextFormField(
+
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
-          focusedBorder: new OutlineInputBorder(
-              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
+          border: UnderlineInputBorder(
+              borderRadius:BorderRadius.circular(10.0)),
+//          border: new OutlineInputBorder(
+//              borderSide: new BorderSide(color: Colors.black,  width: 1.5)),
+//          focusedBorder: new OutlineInputBorder(
+//              borderSide: new BorderSide(color:  getColorHex("#2592b3"), width: 1.5)),
 //            enabledBorder: InputBorder.none,
           errorBorder: OutlineInputBorder(
               borderSide: new BorderSide(color: Colors.red,  width: 1.5)),
@@ -227,15 +230,12 @@ class _layerParamState extends State<layerParam> {
 //            prefixIcon: Icon(Icons.lock),
           fillColor: Colors.white,
           filled: true,
-          labelText: "Enter altitude",
+          labelText: "Enter value",
         ),
         validator: (String val) {
           if (val.isEmpty) {
-            return "Altitude is required";
+            return "Please input altitude.";
           }
-//          else if (int.parse(val) > 105){
-//            return "Exceeded maximum number of km (105km)";
-//          }
           return null;
         },
         onChanged: (String val) {
@@ -848,7 +848,7 @@ class _layerParamState extends State<layerParam> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(left: 5.0),
-                                  child: Text("Layer Parameter", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                  child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                 ),
                                 SizedBox(
                                   height: 10,
