@@ -12,7 +12,7 @@ String dropdownValue = 'Choose Altitude';
 String dropdownValue2 = 'Choose';
 
 var finalAnswer ;
-String required= 'Pressure', units, requiredSubType;
+String required= 'Pressure Altitude', units, requiredSubType;
 double number;
 String p = 'Pressure Altitude', t = 'Temperature Altitude', d = 'Density Altitude';
 String i = 'imperial', m = 'metric';
