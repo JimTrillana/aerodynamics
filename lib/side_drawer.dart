@@ -11,6 +11,14 @@ class SideBar extends StatefulWidget {
   _SideBarState createState() => _SideBarState();
 }
 
+Color getColorHex(String hexColor) {
+  hexColor = hexColor.toUpperCase().replaceAll('#', '');
+  if (hexColor.length == 6) {
+    hexColor = 'FF' + hexColor;
+  }
+  return Color(int.parse(hexColor, radix: 16));
+}
+
 class _SideBarState extends State<SideBar> {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,7 @@ class _SideBarState extends State<SideBar> {
                 height: MediaQuery.of(context).size.height / 5.5,
                 margin: const EdgeInsets.only(
                   top: 30.0,
-                  left: 30,
+                  left: 40,
                   right: 30
                 ),
                 child: Image.asset(
@@ -40,11 +48,20 @@ class _SideBarState extends State<SideBar> {
                 ),
               ),
               Container(
+                  margin: EdgeInsets.only(bottom:15),
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                  child:  Text("AerodynamicX",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey))),
+                  child:  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Aerodynamic",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex("#1d4a78"))),
+                      Text("X",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 20, color:  getColorHex("#ff7e3d"))),
+                    ],
+                  )),
               SizedBox(height:35),
               Container(
                 padding: EdgeInsets.all(15.0),

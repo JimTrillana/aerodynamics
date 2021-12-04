@@ -720,7 +720,6 @@ class _RatioState extends State<Ratio> {
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           titleSpacing: 0,
           elevation: 3.0,

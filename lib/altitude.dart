@@ -741,15 +741,15 @@ class _AltitudeState extends State<Altitude> {
             ),
           ],
         ),
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/bg4.png"),
-                fit: BoxFit.cover,
-              )),
-          child: Form(
-            key: _formula1Form,
-            child: Column(
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height-100,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/bg4.png"),
+                  fit: BoxFit.cover,
+                )),
+            child:  Column(
               children: [
                 SizedBox(height:30),
                 Container(
@@ -772,79 +772,75 @@ class _AltitudeState extends State<Altitude> {
                   ),
                 ),
                 SizedBox(height:35),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
-                      child:  Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          finalAnswer != null ?
-                          Container(
-                              margin: EdgeInsets.only(top: 10.0, bottom: 40.0),
-                              padding: EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width-30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: getColorHex('#155174'),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    offset: Offset(-1, 1),
-                                    blurRadius: 3,
-                                  ),
-                                ],
+                Container(
+                  margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
+                  child:  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      finalAnswer != null ?
+                      Container(
+                          margin: EdgeInsets.only(top: 10.0, bottom: 40.0),
+                          padding: EdgeInsets.all(15),
+                          width: MediaQuery.of(context).size.width-30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: getColorHex('#155174'),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: Offset(-1, 1),
+                                blurRadius: 3,
                               ),
-                              child: Column(
-                                children: [
-                                  Text("Answer", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                      maxLines:5),
-                                  SizedBox(height: 10.0,),
-                                  Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
-                                ],
-                              )) : Container(),
-                          Container(
-                            margin: EdgeInsets.only(left: 5.0),
-                            child: Text("Choose altitude", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                          ),
-                          Row(
-                            children: [
-                              _requiredTextField(),
                             ],
                           ),
-                          SizedBox(height: 20,),
-                          Container(
-                            width: MediaQuery.of(context).size.width-30,
-                            child: Row(
-                              children: [
-                                _radioButton('Metric',  getColorHex('#155174'), 0, selectedType),
-                                SizedBox(width: 10.0,),
-                                _radioButton('Imperial',  getColorHex('#155174'), 1, selectedType),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 15,),
-                          Container(
-                            margin: EdgeInsets.only(left: 5.0),
-                            child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                                maxLines:5),
-                          ),
-                          SizedBox(height: 10,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Column(
                             children: [
-                              Expanded(child: _number()),
-                              SizedBox(width: 5.0,),
-                              SubDropDown(),
+                              Text("Answer", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                  maxLines:5),
+                              SizedBox(height: 10.0,),
+                              Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                             ],
-                          ),
-                          SizedBox(height: 30,),
-                          _calculate(),
-                          SizedBox(height:15),
+                          )) : Container(),
+                      Container(
+                        margin: EdgeInsets.only(left: 5.0),
+                        child: Text("Choose altitude", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                      ),
+                      Row(
+                        children: [
+                          _requiredTextField(),
                         ],
                       ),
-                    ),
+                      SizedBox(height: 20,),
+                      Container(
+                        width: MediaQuery.of(context).size.width-30,
+                        child: Row(
+                          children: [
+                            _radioButton('Metric',  getColorHex('#155174'), 0, selectedType),
+                            SizedBox(width: 10.0,),
+                            _radioButton('Imperial',  getColorHex('#155174'), 1, selectedType),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                      Container(
+                        margin: EdgeInsets.only(left: 5.0),
+                        child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            maxLines:5),
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(child: _number()),
+                          SizedBox(width: 5.0,),
+                          SubDropDown(),
+                        ],
+                      ),
+                      SizedBox(height: 30,),
+                      _calculate(),
+                      SizedBox(height:15),
+                    ],
                   ),
                 ),
               ],
