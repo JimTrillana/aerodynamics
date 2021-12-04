@@ -12,7 +12,7 @@ String dropdownValue = 'Choose Altitude';
 String dropdownValue2 = 'Choose';
 
 var finalAnswer ;
-String required= 'Pressure', units, requiredSubType;
+String required= 'Pressure Altitude', units, requiredSubType;
 double number;
 String p = 'Pressure Altitude', t = 'Temperature Altitude', d = 'Density Altitude';
 String i = 'imperial', m = 'metric';
@@ -55,6 +55,7 @@ class _AltitudeState extends State<Altitude> {
 
       metricSelected = true;
       selectedSubType = "";
+      selectedType = "Pressure Altitude";
 
       dropdownValue = "Pressure Altitude";
 
@@ -255,6 +256,9 @@ class _AltitudeState extends State<Altitude> {
             borderRadius: BorderRadius.circular(8.0),
           ),
           onPressed: (){
+
+            print(type);
+
             changeIndex(index);
             if(type == "Choose Altitude"){
               setState(() {
