@@ -7,7 +7,6 @@ import 'dart:math';
 bool metricSelected;
 List <String>subType = [];
 int currentIndex = 0;
-final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 String dropdownValue = 'Choose Altitude';
 String dropdownValue2 = 'Choose';
 
@@ -37,6 +36,7 @@ class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
   String selectedType;
   String selectedSubType = "";
+  final GlobalKey<FormState> _formula1Form = GlobalKey<FormState>();
 
   void changeIndex (int index){
     setState((){
@@ -70,7 +70,7 @@ class _AltitudeState extends State<Altitude> {
   Widget SubDropDown() {
     return Expanded(
       child: Container(
-          height: 50,
+          height: 55,
           margin: EdgeInsets.only( left: 5.0, ),
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(
@@ -780,7 +780,6 @@ class _AltitudeState extends State<Altitude> {
                   margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
                   child:  Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       finalAnswer != null ?
                       Container(
@@ -806,44 +805,54 @@ class _AltitudeState extends State<Altitude> {
                               Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                             ],
                           )) : Container(),
-                      Container(
-                        margin: EdgeInsets.only(left: 5.0),
-                        child: Text("Choose altitude", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                      ),
-                      Row(
-                        children: [
-                          _requiredTextField(),
-                        ],
-                      ),
-                      SizedBox(height: 20,),
-                      Container(
-                        width: MediaQuery.of(context).size.width-30,
-                        child: Row(
+                      Form(
+                        key: _formula1Form,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            _radioButton('Metric',  getColorHex('#155174'), 0, selectedType),
-                            SizedBox(width: 10.0,),
-                            _radioButton('Imperial',  getColorHex('#155174'), 1, selectedType),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0),
+                              child: Text("Choose altitude", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                            ),
+                            Row(
+                              children: [
+                                _requiredTextField(),
+                              ],
+                            ),
+                            SizedBox(height: 20,),
+                            Container(
+                              width: MediaQuery.of(context).size.width-30,
+                              child: Row(
+                                children: [
+                                  _radioButton('Metric',  getColorHex('#155174'), 0, selectedType),
+                                  SizedBox(width: 10.0,),
+                                  _radioButton('Imperial',  getColorHex('#155174'), 1, selectedType),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 15,),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.0),
+                              child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                  maxLines:5),
+                            ),
+                            SizedBox(height: 10,),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(child: _number()),
+                                SizedBox(width: 5.0,),
+                                SubDropDown(),
+                              ],
+                            ),
+                            SizedBox(height: 30,),
+                            _calculate(),
+                            SizedBox(height:15),
                           ],
                         ),
                       ),
-                      SizedBox(height: 15,),
-                      Container(
-                        margin: EdgeInsets.only(left: 5.0),
-                        child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                            maxLines:5),
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(child: _number()),
-                          SizedBox(width: 5.0,),
-                          SubDropDown(),
-                        ],
-                      ),
-                      SizedBox(height: 30,),
-                      _calculate(),
-                      SizedBox(height:15),
                     ],
                   ),
                 ),
