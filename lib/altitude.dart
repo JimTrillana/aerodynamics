@@ -32,59 +32,6 @@ class Altitude extends StatefulWidget {
   _AltitudeState createState() => _AltitudeState();
 }
 
-class subTypeDropDown extends StatefulWidget {
-  @override
-  _subTypeDropDownState createState() => _subTypeDropDownState();
-}
-
-class _subTypeDropDownState extends State<subTypeDropDown> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-          margin: EdgeInsets.only(top: 15.0, left: 5.0, ),
-          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-//            boxShadow: [
-//              BoxShadow(
-//                color: Colors.white,
-//                offset: Offset(-1, 1),
-//                blurRadius: 2,
-//              ),
-//            ],
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: dropdownValue2,
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 24,
-              isExpanded: true,
-              elevation: 16,
-//          style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.blue,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValue2 = newValue;
-                  requiredSubType = newValue;
-                });
-              },
-              items: subType.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          )),
-    );
-  }
-}
-
 
 class _AltitudeState extends State<Altitude> {
   final _advancedDrawerController = AdvancedDrawerController();
@@ -109,16 +56,21 @@ class _AltitudeState extends State<Altitude> {
       metricSelected = true;
       selectedSubType = "";
 
-      dropdownValue2 = "--";
-      dropdownValue = "Choose Altitude";
-      requiredSubType =  "--";
+      dropdownValue = "Pressure Altitude";
+
+      subType.add("Pascal");
+      subType.add("atm");
+      print(subType);
+      dropdownValue2 = "Pascal";
+      requiredSubType = "Pascal";
     });
   }
 
   Widget SubDropDown() {
     return Expanded(
       child: Container(
-          margin: EdgeInsets.only(top: 15.0, left: 5.0, ),
+          height: 50,
+          margin: EdgeInsets.only( left: 5.0, ),
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -160,10 +112,12 @@ class _AltitudeState extends State<Altitude> {
           )),
     );
   }
+
   Widget _requiredTextField() {
     return Expanded(
       child: Container(
-          margin: EdgeInsets.only(top: 15.0, right: 5.0),
+          height: 50,
+          margin: EdgeInsets.only(top: 10.0, right: 5.0),
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -275,7 +229,7 @@ class _AltitudeState extends State<Altitude> {
                   });
                 }
               },
-              items: <String>['Choose Altitude', 'Pressure Altitude', 'Density Altitude']
+              items: <String>['Pressure Altitude', 'Density Altitude']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -293,7 +247,7 @@ class _AltitudeState extends State<Altitude> {
   Widget _radioButton(String value, Color color, int index, String type){
     return Expanded(
       child: Container(
-        height: 60.0,
+        height: 50.0,
         child: FlatButton(
           // change color button if its selected or not
           color: currentIndex == index ? color : Colors.grey[200],
@@ -360,7 +314,7 @@ class _AltitudeState extends State<Altitude> {
           child: Text(value, style: TextStyle(
             color: currentIndex == index ? Colors.white : Colors.blueGrey,
             fontWeight: FontWeight.bold,
-            fontSize: 18
+            fontSize: 15
 
           ),),
         ),
@@ -370,7 +324,6 @@ class _AltitudeState extends State<Altitude> {
 
   Widget _number() {
     return Container(
-//      margin: EdgeInsets.all(10.0),
       child: TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -567,7 +520,7 @@ class _AltitudeState extends State<Altitude> {
 
   Widget _calculate() {
     return Container(
-      height: 60,
+      height: 50,
       width: MediaQuery.of(context).size.width-30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -729,7 +682,7 @@ class _AltitudeState extends State<Altitude> {
         child: Text(
           "CALCULATE",
           style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         ),
         shape: RoundedRectangleBorder(
           side: BorderSide(color: getColorHex('#fa7b20'), width: 3.0),
@@ -823,6 +776,7 @@ class _AltitudeState extends State<Altitude> {
                       margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
                       child:  Column(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           finalAnswer != null ?
                           Container(
@@ -848,10 +802,13 @@ class _AltitudeState extends State<Altitude> {
                                   Text(finalAnswer, textAlign: TextAlign.center, style: TextStyle(color: getColorHex('#e0ecf3'), fontSize: 18,)),
                                 ],
                               )) : Container(),
+                          Container(
+                            margin: EdgeInsets.only(left: 5.0),
+                            child: Text("Choose altitude", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                          ),
                           Row(
                             children: [
                               _requiredTextField(),
-                              SubDropDown(),
                             ],
                           ),
                           SizedBox(height: 20,),
@@ -865,17 +822,22 @@ class _AltitudeState extends State<Altitude> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 15,),
+                          Container(
+                            margin: EdgeInsets.only(left: 5.0),
+                            child: Text("Altitude (a)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                maxLines:5),
+                          ),
                           SizedBox(height: 10,),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Expanded(child: _number()),
                               SizedBox(width: 5.0,),
-                              Visibility(
-                                  visible: metricSelected,
-                                  child: Text(selectedSubType, style: TextStyle(fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: 20, color: getColorHex('#155174')))),
+                              SubDropDown(),
                             ],
                           ),
-                          SizedBox(height: 40,),
+                          SizedBox(height: 30,),
                           _calculate(),
                           SizedBox(height:15),
                         ],

@@ -56,9 +56,18 @@ class _homePageState extends State<homePage> {
                   Container(
                       margin: EdgeInsets.only(bottom:70),
                       width: MediaQuery.of(context).size.width,
-                      child:  Text("AerodynamicX",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 26, color: Colors.blueGrey))),
+                      child:  Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Aerodynamic",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 26, color: getColorHex("#1d4a78"))),
+                          Text("X",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontFamily: "Poppins", fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 26, color:  getColorHex("#ff7e3d"))),
+                        ],
+                      )),
                   SizedBox(height:140),
                   Container(
                     margin: EdgeInsets.only(top: 20.0),
