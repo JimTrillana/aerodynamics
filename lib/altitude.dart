@@ -508,7 +508,7 @@ class _AltitudeState extends State<Altitude> {
     print(double.parse(((temp*( pow((numInput/pDen),(1/(-32.174/(a*1716)-1))) -1)/a)+ho).toStringAsFixed(3)));
 
     setState(() {
-      finalAnswer = '${double.parse(((temp*( pow((numInput/pDen),(1/(-32.174/(a*1716)-1))) -1)/a)+ho).toStringAsFixed(3))} slug/ft^3';
+      finalAnswer = '${double.parse(((temp*( pow((numInput/pDen),(1/(-32.174/(a*1716)-1))) -1)/a)+ho).toStringAsFixed(3))} ft';
     });
 
   }
@@ -519,7 +519,7 @@ class _AltitudeState extends State<Altitude> {
     print(double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3)));
 
     setState(() {
-      finalAnswer = '${double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3))} slug/ft^3';
+      finalAnswer = '${double.parse(((((1716*temp)*(log(numInput/pDen)))/-32.174)+ho).toStringAsFixed(3))} ft';
     });
 
   }
@@ -753,7 +753,7 @@ class _AltitudeState extends State<Altitude> {
                   image: AssetImage("assets/bg4.png"),
                   fit: BoxFit.cover,
                 )),
-            child:  Column(
+            child:  ListView(
               children: [
                 SizedBox(height:30),
                 Container(

@@ -794,8 +794,8 @@ class _RatioState extends State<Ratio> {
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 30.0, right: 30.0,  bottom:40.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    child: ListView(
+//                      mainAxisSize: MainAxisSize.min,
                       children: [
                         finalAnswer != null ?
                         Container(

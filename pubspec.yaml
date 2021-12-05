@@ -33,8 +33,9 @@ dependencies:
   page_transition:
   custom_splash: ^0.0.2
   flutter_advanced_drawer:
-  ffi: ^1.0.0
+  ffi:
   fluttertoast: ^4.0.0
+  auto_size_text:
 
 dev_dependencies:
   flutter_test:

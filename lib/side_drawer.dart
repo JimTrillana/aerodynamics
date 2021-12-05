@@ -2,6 +2,7 @@ import 'package:aerocal/altitude.dart';
 import 'package:aerocal/homePage.dart';
 import 'package:aerocal/layerParam.dart';
 import 'package:aerocal/ratio.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -118,17 +119,17 @@ class _SideBarState extends State<SideBar> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Layer Parameters", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                AutoSizeText("Layer Parameters", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
                                     maxLines:5),
                                 Container(
-                                  child: Text("Pressure, Temperature, Density", style: TextStyle(color: Colors.black, fontSize: 13),
+                                  width: MediaQuery.of(context).size.width/2,
+                                  child: AutoSizeText("Pressure, Temperature, Density", style: TextStyle(color: Colors.black, fontSize: 13),
                                     maxLines:2,),
                                 ),
                               ],
                             ),
                           ],
                         ),
-
                         Container(
                           child: Icon(Icons.arrow_forward_ios),
                         ),
@@ -156,7 +157,7 @@ class _SideBarState extends State<SideBar> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Altitude", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                AutoSizeText("Altitude", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
                                     maxLines:5),
                                 Container(
                                   width: MediaQuery.of(context).size.width/2,
@@ -195,7 +196,7 @@ class _SideBarState extends State<SideBar> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Ratio", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                                AutoSizeText("Ratio", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
                                     maxLines:5),
                                 Container(
                                   width: MediaQuery.of(context).size.width/2,
@@ -206,7 +207,6 @@ class _SideBarState extends State<SideBar> {
                             ),
                           ],
                         ),
-
                         Container(
                           child: Icon(Icons.arrow_forward_ios),
                         ),
